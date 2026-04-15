@@ -1,0 +1,113 @@
+.adoption-form-wrapper {
+  background: url('https://png.pngtree.com/thumb_back/fh260/back_our/20190622/ourmid/pngtree-simple-wind-cat-pet-cat-food-dog-food-footprint-pet-shop-image_227158.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 450px;
+  padding: 40px 50px;
+  background-color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.form-header {
+  color: #e1330b;
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-box {
+  border-bottom: 2px solid #162938;
+  margin: 15px 0px;
+  position: relative;
+  text-align: left;
+}
+
+.input-box label {
+  position: absolute;
+  top: 10px;
+  left: 40px;
+  transition: 0.2s ease all;
+  font-size: 1em;
+  color: #555;
+  pointer-events: none;
+}
+
+
+.input-box .date-label {
+  top: -15px;
+  font-size: 0.8em;
+  color: #e1330b;
+}
+
+.input-box input, .input-box textarea {
+  width: 100%;
+  outline: none;
+  background: transparent;
+  border: none;
+  padding: 10px 10px 10px 40px;
+  color: #162938;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+.input-box textarea {
+  height: 80px;
+  resize: none;
+}
+
+.input-box input:focus + label,
+.input-box input:not(:placeholder-shown) + label,
+.input-box textarea:focus + label,
+.input-box textarea:not(:placeholder-shown) + label {
+  top: -15px;
+  font-size: 0.8em;
+  color: #e1330b;
+  font-weight: bold;
+}
+
+.icon {
+  position: absolute;
+  left: 5px;
+  top: 12px;
+  color: #162938;
+  font-size: 1.2em;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #e1330b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #c22908;
+}
+
+.success-message h2 {
+  color: #006f3c;
+  margin-bottom: 15px;
+}

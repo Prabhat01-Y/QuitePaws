@@ -1,0 +1,167 @@
+.contact-page-wrapper {
+    font-family: 'Outfit', sans-serif;
+    background: linear-gradient(#ffdad5, #fff7f9);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px 20px;
+}
+
+.contact-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    max-width: 1200px;
+    gap: 40px;
+}
+
+.contact-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.contact-left-title h2 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.form-subtitle {
+    font-size: 0.95rem;
+    color: #666;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.contact-left-title hr {
+    width: 50px;
+    border: 1px solid #000;
+    margin-top: 10px;
+}
+
+.contact-inputs {
+    padding: 15px;
+    font-size: 1rem;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    box-sizing: border-box;
+}
+
+.contact-left textarea {
+    height: 80px;
+    padding-top: 15px;
+    border-radius: 20px;
+    resize: none;
+}
+
+.address-input {
+    height: 60px;
+}
+
+.contact-inputs:focus {
+    outline: none;
+    border-color: #ff7a7a;
+}
+
+.select-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 1.5em;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+.file-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.file-input-label {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.file-input {
+    padding: 10px;
+    font-size: 0.9rem;
+    border: 2px dashed #ff7a7a;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: #fff7f9;
+    transition: border-color 0.3s ease;
+}
+
+.file-input:focus {
+    outline: none;
+    border-color: #ff5252;
+}
+
+.file-input:hover {
+    border-color: #ff5252;
+}
+
+.file-name {
+    font-size: 0.85rem;
+    color: #666;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    word-break: break-all;
+}
+
+.contact-left button {
+    padding: 15px 30px;
+    font-size: 16px;
+    background-color: #ff7a7a;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: fit-content;
+    transition: background-color 0.3s ease;
+}
+
+.contact-left button:hover {
+    background-color: #ff5252;
+}
+
+.contact-left button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.status-message {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.contact-right img {
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width: 800px) {
+    .contact-container {
+        flex-direction: column;
+    }
+    
+    .contact-right {
+        display: none; 
+    }
+}

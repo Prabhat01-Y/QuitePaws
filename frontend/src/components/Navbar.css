@@ -1,0 +1,161 @@
+/* =========================================
+   Navbar Layout
+========================================= */
+
+.navbar {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10000;
+    box-sizing: border-box;
+    backdrop-filter: blur(10px);
+    background: rgba(231, 165, 165, 0.4);
+}
+
+/* Logo */
+.navbar .logo {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.8rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Nav Links */
+.navbar ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    margin-left: 25px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    padding: 7px 18px;
+    color: #fff;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    border: 1.5px solid rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+/* Hover & Active */
+.navbar ul li a:hover,
+.navbar ul li a.active {
+    background: #fff;
+    color: #006f3c;
+    border-color: #fff;
+}
+
+/* Admin Link */
+.admin-nav-link {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.6);
+    padding: 7px 18px !important;
+    border-radius: 20px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.admin-nav-link:hover {
+    background: #fff !important;
+    color: #006f3c !important;
+    border-color: #fff;
+    transform: none;
+}
+
+/* Logout Button */
+.logout-nav-btn {
+    background: transparent;
+    color: #fff;
+    border: 1.5px solid rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    padding: 7px 18px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    line-height: 1.2;
+    display: inline-flex;
+    align-items: center;
+}
+
+.logout-nav-btn:hover {
+    background: rgba(255, 80, 80, 0.85);
+    border-color: rgba(255, 80, 80, 0.9);
+    color: #fff;
+}
+
+/* =========================================
+   Laptop Optimization
+========================================= */
+
+@media (min-width: 1024px) {
+    .navbar {
+        padding: 20px 100px;
+    }
+}
+
+/* =========================================
+   Tablet
+========================================= */
+
+@media (max-width: 992px) {
+    .navbar {
+        padding: 15px 40px;
+    }
+
+    .navbar .logo {
+        font-size: 1.5rem;
+    }
+
+    .navbar ul li {
+        margin-left: 15px;
+    }
+}
+
+/* =========================================
+   Mobile
+========================================= */
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px 20px;
+    }
+
+    .navbar ul {
+        gap: 10px;
+    }
+
+    .navbar ul li {
+        margin-left: 10px;
+    }
+
+    .navbar ul li a {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+}

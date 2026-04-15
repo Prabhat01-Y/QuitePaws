@@ -1,0 +1,206 @@
+/* =========================================
+   Page Layout
+========================================= */
+
+.admin-wrapper {
+  background-color: #f0f2f5;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-family: 'Raleway', sans-serif;
+  padding: 100px 20px 60px; /* top clears the fixed navbar */
+}
+
+/* =========================================
+   Form Card
+========================================= */
+
+.admin-container {
+  background: white;
+  padding: 40px 50px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 560px;
+}
+
+.admin-container h2 {
+  text-align: center;
+  margin: 0 0 28px;
+  color: #1a1a1a;
+  font-size: 1.5rem;
+  font-weight: 800;
+  border-bottom: 2px solid #01e37f;
+  padding-bottom: 14px;
+}
+
+/* =========================================
+   Form Groups & Inputs
+========================================= */
+
+.admin-form .form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.admin-form label {
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.admin-form input,
+.admin-form textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: #333;
+  background: #fafafa;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.admin-form input:focus,
+.admin-form textarea:focus {
+  outline: none;
+  border-color: #01e37f;
+  box-shadow: 0 0 0 3px rgba(1, 227, 127, 0.15);
+  background: #fff;
+}
+
+.admin-form textarea {
+  resize: vertical;
+  height: 90px;
+}
+
+/* =========================================
+   Image Upload Area
+========================================= */
+
+.image-upload-area {
+  border: 2px dashed #01e37f;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.3s, background 0.3s;
+  overflow: hidden;
+  min-height: 160px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f9fffe;
+  box-sizing: border-box;
+}
+
+.image-upload-area:hover {
+  border-color: #006f3c;
+  background: #f0fff8;
+}
+
+.image-upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px;
+  text-align: center;
+  color: #777;
+}
+
+.upload-icon {
+  font-size: 2.5rem;
+}
+
+.image-upload-placeholder p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.upload-hint {
+  font-size: 0.8rem;
+  color: #aaa;
+  margin: 0;
+}
+
+.image-preview {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.change-image-btn {
+  margin-top: 8px;
+  background: none;
+  border: 1px solid #01e37f;
+  color: #006f3c;
+  border-radius: 4px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+
+.change-image-btn:hover {
+  background: #e6fff4;
+}
+
+/* =========================================
+   Submit Button
+========================================= */
+
+.admin-submit-btn {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(45deg, #01e37f, #00c86f);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(1, 227, 127, 0.3);
+}
+
+.admin-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(1, 227, 127, 0.5);
+}
+
+.admin-submit-btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* =========================================
+   Status Message
+========================================= */
+
+.admin-status {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #006f3c;
+}
+
+/* =========================================
+   Responsive
+========================================= */
+
+@media (max-width: 600px) {
+  .admin-container {
+    padding: 28px 20px;
+  }
+}

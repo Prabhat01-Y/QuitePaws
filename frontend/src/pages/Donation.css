@@ -1,0 +1,282 @@
+/* =========================================
+   GLOBAL RESET
+========================================= */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #ffffff; 
+}
+
+/* =========================================
+   WRAPPER
+========================================= */
+
+.donation-page-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* =========================================
+   HERO SECTION
+========================================= */
+
+#hero {
+  width: 100%;
+  padding: 80px 20px 60px; 
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.hero-text-highlight {
+  background: rgba(1, 227, 127, 0.1); 
+  padding: 30px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  border: 1px solid rgba(1, 227, 127, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  display: inline-block;
+}
+
+#hero h1 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  margin-bottom: 15px;
+  color: #006f3c; 
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+#hero p {
+  font-size: 1.2rem;
+  margin: 0; 
+  color: #333;
+  font-weight: 500;
+}
+
+
+[data-theme="dark"] .hero-text-highlight {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] #hero h1 {
+  color: #01e37f;
+}
+
+[data-theme="dark"] #hero p {
+  color: #ddd;
+}
+
+/* Donate Button */
+
+.donate-btn {
+  padding: 14px 35px;
+  font-size: 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  border: none;
+  background: linear-gradient(45deg, #01e37f, #00c86f);
+  color: #ffffff; 
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 25px rgba(0, 227, 127, 0.3);
+}
+
+.donate-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 35px rgba(0, 227, 127, 0.5);
+}
+
+/* =========================================
+   DONATION FORM 
+========================================= */
+
+.donation-form-container {
+  background: var(--bg-color);
+  padding: 40px;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 100%;
+  margin: 30px auto 0;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  color: var(--text-color);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.donation-form-container h3 {
+  margin-bottom: 25px;
+  color: #006f3c;
+}
+
+[data-theme="dark"] .donation-form-container h3 {
+  color: #01e37f;
+}
+
+.inline-donation-form .form-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.inline-donation-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+}
+
+.inline-donation-form input,
+.inline-donation-form select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: border 0.2s ease;
+}
+
+.inline-donation-form input:focus,
+.inline-donation-form select:focus {
+  border-color: #01e37f;
+  outline: none;
+}
+
+.submit-donation-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(45deg, #01e37f, #00c86f);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.3s ease;
+}
+
+.submit-donation-btn:hover {
+  transform: scale(1.02);
+}
+
+.cancel-btn {
+  width: 100%;
+  padding: 12px;
+  background-color:#8a2203;
+  color: white; 
+  border: none;
+  border-radius: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.status-message {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #8a2203;
+  text-align: center;
+}
+
+[data-theme="dark"] .status-message {
+  color: #01e37f;
+}
+
+/* =========================================
+   FULL WIDTH CAROUSEL
+========================================= */
+
+#carousel-container {
+  width: 100vw;
+  margin: 60px 0 0 0;
+  padding: 0;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.carousel-viewport {
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-track img {
+  width: 100vw;
+  height: 80vh;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.carousel-btn {
+  background: rgba(0, 0, 0, 0.6);
+  color: #ffffff; 
+  border: none;
+  font-size: 2rem;
+  padding: 12px 18px;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+.carousel-btn.prev {
+  left: 30px;
+}
+
+.carousel-btn.next {
+  right: 30px;
+}
+
+.carousel-btn:hover {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+/* =========================================
+   ANIMATION
+========================================= */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+  #hero {
+    padding: 60px 20px 40px;
+  }
+  .carousel-track img {
+    height: 50vh;
+  }
+  .carousel-btn.prev {
+    left: 10px;
+  }
+  .carousel-btn.next {
+    right: 10px;
+  }
+}

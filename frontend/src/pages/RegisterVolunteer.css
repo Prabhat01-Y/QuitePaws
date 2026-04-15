@@ -1,0 +1,146 @@
+/* =========================================
+   Page Layout & Navbar Clearance
+========================================= */
+
+.register-page-wrapper {
+    
+    padding-top: 120px; 
+    padding-bottom: 60px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: var(--bg-color, #f9f9f9); 
+}
+
+/* =========================================
+   Registration Form Container
+========================================= */
+
+.register-container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 600px;
+    padding: 40px; 
+    margin: 0 20px; 
+}
+
+/* Dark Mode Adaptation for the Container */
+[data-theme="dark"] .register-container {
+    background-color: #1e1e1e;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.register-container h2 {
+    text-align: center;
+    color: #006f3c; 
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-size: 28px; 
+    font-weight: 800;
+}
+
+[data-theme="dark"] .register-container h2 {
+    color: #01e37f;
+}
+
+/* =========================================
+   Form Elements
+========================================= */
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.register-container label {
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+    font-size: 0.95rem;
+}
+
+[data-theme="dark"] .register-container label {
+    color: #ddd;
+}
+
+
+.register-container input[type="text"],
+.register-container input[type="email"],
+.register-container input[type="tel"],
+.register-container select,
+.register-container textarea {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 22px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box; 
+    font-family: inherit;
+    font-size: 16px; 
+    
+    
+    background-color: #ffffff;
+    color: #333333;
+    
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Dark mode inputs */
+[data-theme="dark"] .register-container input[type="text"],
+[data-theme="dark"] .register-container input[type="email"],
+[data-theme="dark"] .register-container input[type="tel"],
+[data-theme="dark"] .register-container select,
+[data-theme="dark"] .register-container textarea {
+    background-color: #2a2a2a;
+    border-color: #444;
+    color: #ffffff;
+}
+
+.register-container input:focus,
+.register-container select:focus,
+.register-container textarea:focus {
+    border-color: #01e37f;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(1, 227, 127, 0.2);
+}
+
+/* =========================================
+   Submit Button
+========================================= */
+
+.submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(45deg, #01e37f, #00c86f);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(1, 227, 127, 0.3);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(1, 227, 127, 0.5);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 600px) {
+    .register-container {
+        padding: 30px 20px;
+    }
+}

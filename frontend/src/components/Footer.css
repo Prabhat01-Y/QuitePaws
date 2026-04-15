@@ -1,0 +1,166 @@
+/* =========================================
+   Footer Main
+========================================= */
+
+.footer {
+    background-color: #222;
+    color: #fff;
+    padding: 60px 0 0;
+    font-family: 'Raleway', sans-serif;
+    width: 100%;
+}
+
+/* Container */
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px 40px;
+    gap: 40px;
+}
+
+/* Each Column */
+.footer-container > div {
+    flex: 1;
+    min-width: 260px;
+}
+
+/* Headings */
+.footer h3 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    color: #01e37f;
+    letter-spacing: 0.5px;
+}
+
+/* About Text */
+.footer-about p {
+    line-height: 1.7;
+    color: #ccc;
+    max-width: 320px;
+}
+
+/* Follow Us heading inside About column */
+.footer-follow-heading {
+    margin-top: 28px;
+}
+
+/* Links */
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links ul li {
+    margin-bottom: 12px;
+}
+
+.footer-links ul li a {
+    color: #ccc;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+    color: #01e37f;
+    padding-left: 5px;
+}
+
+/* Contact Info */
+.footer-contact ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-contact ul li {
+    margin-bottom: 12px;
+}
+
+.footer-contact ul li a {
+    color: #ccc;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    word-break: break-all;
+    display: block;
+}
+
+.footer-contact ul li a:hover {
+    color: #01e37f;
+    padding-left: 5px;
+}
+
+/* Social Icons */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 10px;
+}
+
+.social-icons img {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.social-icons img:hover {
+    transform: scale(1.15);
+}
+
+/* Bottom Section */
+.footer-bottom {
+    background-color: #111;
+    text-align: center;
+    padding: 18px 0;
+    color: #888;
+    font-size: 0.9rem;
+    margin-top: 20px;
+}
+
+/* =========================================
+   Laptop Optimization
+========================================= */
+
+@media (min-width: 1024px) {
+    .footer-container {
+        padding: 0 80px 50px;
+    }
+}
+
+/* =========================================
+   Tablet
+========================================= */
+
+@media (max-width: 992px) {
+    .footer-container {
+        padding: 0 40px 40px;
+        gap: 30px;
+    }
+}
+
+/* =========================================
+   Mobile
+========================================= */
+
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 0 20px 30px;
+    }
+
+    .footer-about p {
+        max-width: 100%;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+}

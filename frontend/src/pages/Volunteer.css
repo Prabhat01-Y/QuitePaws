@@ -1,0 +1,189 @@
+/* =========================================
+   Volunteer Page Layout
+========================================= */
+
+.volunteer-page {
+    
+    padding-top: 100px; 
+    
+    
+    background-color: var(--bg-color, #f9f9f9);
+    color: var(--text-color, #333);
+    padding-bottom: 40px;
+    min-height: 100vh;
+}
+
+.volunteer-header {
+    background: linear-gradient(135deg, #01e37f, #006f3c);
+    color: #ffffff;
+    padding: 40px 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(1, 227, 127, 0.3);
+}
+
+.volunteer-header h1 {
+    color: #ffffff;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .volunteer-header {
+    background: linear-gradient(135deg, #006f3c, #004d2a);
+}
+
+/* =========================================
+   Search Bar
+========================================= */
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.search-bar input[type="text"] {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+.search-bar input[type="text"]:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+    background-color: #45a049;
+}
+
+/* =========================================
+   Opportunities Section
+========================================= */
+
+.opportunities, 
+.recent-heroes-section {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--bg-color, white);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    max-width: 800px;
+    border: 1px solid #eaeaea;
+}
+
+[data-theme="dark"] .opportunities,
+[data-theme="dark"] .recent-heroes-section {
+    border-color: #333;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.opportunities h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.opportunity {
+    margin: 10px 0;
+    padding: 15px 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .opportunity {
+    border-bottom-color: #444;
+}
+
+.opportunity:last-child {
+    border-bottom: none;
+}
+
+.opportunity:hover {
+    background-color: rgba(76, 175, 80, 0.05);
+}
+
+.register-btn {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.register-btn:hover {
+    background-color: #45a049;
+}
+/* =========================================
+   Pagination Controls
+========================================= */
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+[data-theme="dark"] .pagination-controls {
+    border-top-color: #333;
+}
+
+.pagination-controls span {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.page-btn {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.page-btn:hover:not(:disabled) {
+    background-color: #45a049;
+}
+
+.page-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+[data-theme="dark"] .page-btn:disabled {
+    background-color: #555;
+    color: #888;
+}
