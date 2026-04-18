@@ -55,7 +55,7 @@ Backend will run on: `http://localhost:5000`
 
 ## 🎨 Frontend Setup
 
-The frontend Contact page has been updated with:
+The frontend Emergency Report page has been updated with:
 - Form fields: Name, Email, Mobile, Address, Description
 - Category dropdown selector
 - Priority level selector
@@ -130,8 +130,8 @@ backend/
 ### Frontend
 ```
 frontend/src/pages/
-├── Contact.jsx                    (Updated)
-└── Contact.css                    (Updated)
+├── EmergencyReport.jsx              (New)
+└── EmergencyReport.css              (New)
 ```
 
 ---
@@ -211,4 +211,4 @@ To customize the system:
 1. **Change upload directory** - Edit `emergencyReportRoutes.js` destination path
 2. **Modify file size limit** - Change `limits: { fileSize: 5 * 1024 * 1024 }` in routes
 3. **Add more categories** - Update EmergencyReport model enum values
-4. **Change API base URL** - Update Contact.jsx fetch URL
+4. **Change API base URL** - Update EmergencyReport.jsx fetch URL

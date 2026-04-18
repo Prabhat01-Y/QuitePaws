@@ -1,31 +1,19 @@
 /* =========================================
-   Page Layout
-========================================= */
-
-.admin-wrapper {
-  background-color: #f0f2f5;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  font-family: 'Raleway', sans-serif;
-  padding: 100px 20px 60px; /* top clears the fixed navbar */
-}
-
-/* =========================================
    Form Card
 ========================================= */
 
-.admin-container {
+.admin-add-animal-container {
   background: white;
   padding: 40px 50px;
   border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
   width: 100%;
-  max-width: 560px;
+  max-width: 600px;
+  margin: 0; /* Align perfectly within the new layout */
 }
 
-.admin-container h2 {
+.admin-add-animal-container h2 {
   text-align: center;
   margin: 0 0 28px;
   color: #1a1a1a;
@@ -200,7 +188,7 @@
 ========================================= */
 
 @media (max-width: 600px) {
-  .admin-container {
+  .admin-add-animal-container {
     padding: 28px 20px;
   }
 }

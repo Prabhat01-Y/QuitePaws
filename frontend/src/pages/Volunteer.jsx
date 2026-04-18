@@ -1,165 +1,187 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import './Volunteer.css'; 
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import './Volunteer.css';
+
+// Import a dog image from assets - reuse existing
+import dogImg from '../assets/d1.png';
 
 const Volunteer = () => {
-    
-    const [recentVolunteers, setRecentVolunteers] = useState([]);
-    const [events, setEvents] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
-    
-    
-    const [currentPage, setCurrentPage] = useState(1);
-    const eventsPerPage = 3;
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
-    
-    useEffect(() => {
-        setCurrentPage(1);
-    }, [searchQuery]);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    phone: '',
+    availability: '',
+    skills: [],
+    comments: '',
+    agreed: false
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-    
-    useEffect(() => {
-        const fetchVolunteers = async () => {
-            try {
-                const res = await fetch('http://localhost:5000/api/volunteer-registrations');
-                const data = await res.json();
-                setRecentVolunteers(data);
-            } catch (err) {
-                console.error("Error fetching volunteers", err);
-            }
-        };
-        fetchVolunteers();
-    }, []);
+  const skillOptions = ['Rescuer', 'Fosterer', 'Caretaker', 'Trainer', 'Food Service', 'Other'];
 
-    
-    useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                const res = await fetch('http://localhost:5000/api/events');
-                const data = await res.json();
-                setEvents(data);
-            } catch (err) {
-                console.error("Error fetching events", err);
-            }
-        };
-        fetchEvents();
-    }, []);
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    if (name === 'skills') {
+      setFormData(prev => ({
+        ...prev,
+        skills: checked ? [...prev.skills, value] : prev.skills.filter(s => s !== value)
+      }));
+    } else if (type === 'checkbox') {
+      setFormData(prev => ({ ...prev, [name]: checked }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
+  };
 
-    
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.agreed) {
+      setError('Please agree to the terms and conditions.');
+      return;
+    }
+    setLoading(true);
+    setError('');
 
-    
-    const filteredEvents = events.filter(event => {
-        const eventDate = new Date(event.date);
-        const isFutureOrToday = eventDate >= today;
-        const matchesLocation = event.location && event.location.toLowerCase().includes(searchQuery.toLowerCase());
-        
-        return isFutureOrToday && matchesLocation;
-    });
+    try {
+      // Step 1: Register as volunteer
+      const res = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          role: 'volunteer',
+          mobile: formData.phone,
+          availability: formData.availability,
+          skills: formData.skills,
+          comments: formData.comments
+        })
+      });
 
-    
-    const indexOfLastEvent = currentPage * eventsPerPage;
-    const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
-    const currentEvents = filteredEvents.slice(indexOfFirstEvent, indexOfLastEvent);
-    const totalPages = Math.ceil(filteredEvents.length / eventsPerPage);
+      const data = await res.json();
 
-    
-    const upcomingEventsMap = {};
-    events.forEach(event => {
-        const eventDate = new Date(event.date);
-        if (eventDate >= today) {
-            upcomingEventsMap[event.slug] = event.title; 
-        }
-    });
+      if (!res.ok) {
+        setError(data.message || 'Registration failed.');
+        setLoading(false);
+        return;
+      }
 
-    
-    const upcomingVolunteers = recentVolunteers.filter(vol => upcomingEventsMap[vol.eventId]);
+      // Step 2: Auto-login with returned token
+      login(data);
 
-    return (
-        <div className="volunteer-page">
-            {/* The Header */}
-            <header className="volunteer-header">
-                <h1>Volunteer Registration</h1>
-            </header>
+      // Step 3: Redirect to dashboard
+      navigate('/volunteer-dashboard');
+    } catch (err) {
+      setError('Could not connect to the server. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-            {/* The Search Bar */}
-            <section id="home" className="search-bar">
-                <input 
-                    type="text" 
-                    placeholder="Search by location (city, zip code, etc.)" 
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <button>Search</button>
-            </section>
+  return (
+    <div className="vol-signup-page">
+      <div className="vol-signup-container">
 
-            {/* The Available Opportunities List */}
-            <section id="opportunities" className="opportunities">
-                <h2>Available Opportunities</h2>
-                
-                {filteredEvents.length === 0 ? (
-                    <p style={{ textAlign: 'center', marginTop: '20px' }}>No upcoming events found for this location.</p>
-                ) : (
-                    <>
-                        {/* Map over the paginated events */}
-                        {currentEvents.map((event) => (
-                            <div className="opportunity" key={event._id}>
-                                <div>
-                                    <h3>{event.title}</h3>
-                                    <p>Date: {new Date(event.date).toLocaleDateString()} | Location: {event.location}</p>
-                                </div>
-                                <Link to={`/volunteer-form/${event.slug}`} className="register-btn">
-                                    Register to Volunteer
-                                </Link>
-                            </div>
-                        ))}
-
-                        {/* Pagination Controls */}
-                        {totalPages > 1 && (
-                            <div className="pagination-controls">
-                                <button 
-                                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                                    disabled={currentPage === 1}
-                                    className="page-btn"
-                                >
-                                    &laquo; Prev
-                                </button>
-                                <span>Page {currentPage} of {totalPages}</span>
-                                <button 
-                                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                                    disabled={currentPage === totalPages}
-                                    className="page-btn"
-                                >
-                                    Next &raquo;
-                                </button>
-                            </div>
-                        )}
-                    </>
-                )}
-            </section>
-
-            {/* UPCOMING HEROES SECTION */}
-            <section className="recent-heroes-section">
-                <h2 style={{ textAlign: 'center', color: '#4CAF50', marginBottom: '20px' }}>Our Upcoming Heroes</h2>
-                
-                {upcomingVolunteers.length === 0 ? (
-                    <p style={{ textAlign: 'center' }}>Be the first to register for an upcoming event!</p>
-                ) : (
-                    <ul style={{ listStyleType: 'none', padding: 0 }}>
-                        {/* Reverse the array to show newest first, then slice to limit to 5 */}
-                        {[...upcomingVolunteers].reverse().slice(0, 5).map((vol) => (
-                            <li key={vol._id} style={{ margin: '10px 0', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>
-                                <strong>{vol.fullName}</strong> is volunteering for <span style={{ color: '#4CAF50', fontWeight: 'bold' }}>
-                                    {upcomingEventsMap[vol.eventId]}
-                                </span>
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </section>
+        {/* LEFT: Image + Tagline */}
+        <div className="vol-signup-left">
+          <img src={dogImg} alt="Volunteer with animal" className="vol-hero-img" />
+          <div className="vol-hero-text">
+            <h2>Empowerment Through Service</h2>
+            <p>Unite, Serve, Impact: Your Chance to Give Back</p>
+          </div>
         </div>
-    );
+
+        {/* RIGHT: Registration Form */}
+        <div className="vol-signup-right">
+          <h2 className="vol-form-title">Volunteer Registration</h2>
+          <p className="vol-form-sub">Thank you for your interest in volunteering with us! Please fill out the form below to sign up.</p>
+
+          {error && <div className="vol-error">{error}</div>}
+
+          <form onSubmit={handleSubmit} className="vol-form">
+
+            <div className="vol-form-row">
+              <div className="vol-field">
+                <label>Name:</label>
+                <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Enter" required />
+              </div>
+              <div className="vol-field">
+                <label>Email:</label>
+                <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Example@gmail.com" required />
+              </div>
+            </div>
+
+            <div className="vol-form-row">
+              <div className="vol-field">
+                <label>Phone Number:</label>
+                <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="+91 12345 678" required />
+              </div>
+              <div className="vol-field">
+                <label>Availability:</label>
+                <select name="availability" value={formData.availability} onChange={handleChange} required>
+                  <option value="">Select</option>
+                  <option value="weekdays">Weekdays</option>
+                  <option value="weekends">Weekends</option>
+                  <option value="both">Both</option>
+                  <option value="flexible">Flexible</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="vol-field">
+              <label>Password:</label>
+              <input type="password" name="password" value={formData.password} onChange={handleChange} placeholder="Create a password" minLength={6} required />
+            </div>
+
+            <div className="vol-skills-grid">
+              {skillOptions.map(skill => (
+                <label key={skill} className="vol-skill-check">
+                  <input
+                    type="checkbox"
+                    name="skills"
+                    value={skill}
+                    checked={formData.skills.includes(skill)}
+                    onChange={handleChange}
+                  />
+                  {skill}
+                </label>
+              ))}
+            </div>
+
+            <div className="vol-field">
+              <label>Additional Comments/Questions:</label>
+              <textarea name="comments" value={formData.comments} onChange={handleChange} placeholder="Add Text" rows={3} />
+            </div>
+
+            <label className="vol-terms-check">
+              <input type="checkbox" name="agreed" checked={formData.agreed} onChange={handleChange} />
+              I have read and agree to the terms and conditions.
+            </label>
+
+            <div className="vol-form-actions">
+              <button type="button" className="vol-btn-cancel" onClick={() => navigate('/')}>Cancel</button>
+              <button type="submit" className="vol-btn-submit" disabled={loading}>
+                {loading ? 'Registering...' : 'Submit'}
+              </button>
+            </div>
+
+          </form>
+
+          <p className="vol-login-link">
+            Already a volunteer? <a href="/login">Login here</a>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  );
 };
 
 export default Volunteer;

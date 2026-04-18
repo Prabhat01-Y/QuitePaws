@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import './AdminLogin.css';
+import './AuthForms.css';
 
-const AdminLogin = () => {
+const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -37,8 +37,17 @@ const AdminLogin = () => {
         return;
       }
 
-      login(data.token);
-      navigate('/admin/add-animal');
+      // data contains token + user
+      login(data.token, data);
+      
+      // Redirect based on role
+      if (data.role === 'admin') {
+        navigate('/admin/add-animal');
+      } else if (data.role === 'volunteer') {
+        navigate('/volunteer-dashboard');
+      } else {
+        navigate('/');
+      }
     } catch (err) {
       setError('Could not connect to server. Make sure the backend is running.');
       setLoading(false);
@@ -46,29 +55,28 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="login-wrapper">
-      <div className="login-card">
-        {/* Lock icon */}
-        <div className="login-icon">🔐</div>
-        <h2>Admin Login</h2>
-        <p className="login-subtitle">QuietPaws Admin Portal</p>
+    <div className="auth-wrapper">
+      <div className="auth-card">
+        <div className="auth-icon">👋</div>
+        <h2>Welcome Back</h2>
+        <p className="auth-subtitle">Sign in to your account</p>
 
-        <form onSubmit={handleSubmit} className="login-form">
-          <div className="login-field">
-            <label htmlFor="username">Username</label>
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="auth-field">
+            <label htmlFor="email">Email</label>
             <input
-              id="username"
-              type="text"
-              name="username"
-              value={formData.username}
+              id="email"
+              type="email"
+              name="email"
+              value={formData.email}
               onChange={handleChange}
-              placeholder="Enter admin username"
+              placeholder="Enter your email"
               required
-              autoComplete="username"
+              autoComplete="email"
             />
           </div>
 
-          <div className="login-field">
+          <div className="auth-field">
             <label htmlFor="password">Password</label>
             <div className="password-wrapper">
               <input
@@ -77,7 +85,7 @@ const AdminLogin = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Enter admin password"
+                placeholder="Enter your password"
                 required
                 autoComplete="current-password"
               />
@@ -92,15 +100,19 @@ const AdminLogin = () => {
             </div>
           </div>
 
-          {error && <p className="login-error">⚠️ {error}</p>}
+          {error && <p className="auth-error">⚠️ {error}</p>}
 
-          <button type="submit" className="login-btn" disabled={loading}>
+          <button type="submit" className="auth-btn" disabled={loading}>
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
+        
+        <p className="auth-switch">
+          Don't have an account? <Link to="/signup">Register</Link>
+        </p>
       </div>
     </div>
   );
 };
 
-export default AdminLogin;
+export default Login;

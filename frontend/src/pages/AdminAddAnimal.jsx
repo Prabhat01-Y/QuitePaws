@@ -99,8 +99,8 @@ const AdminAddAnimal = () => {
   };
 
   return (
-    <div className="admin-wrapper">
-      <div className="admin-container">
+    <div className="admin-page">
+      <div className="admin-add-animal-container">
         <h2>Admin: Add New Rescue Animal</h2>
         <form onSubmit={handleSubmit} className="admin-form">
 

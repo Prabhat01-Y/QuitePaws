@@ -5,15 +5,17 @@ const Donation = require('../models/Donation');
 // @access  Public
 const processDonation = async (req, res) => {
   try {
-    const { amount, paymentMethod } = req.body;
+    const { amount, paymentMethod, donorName, donorEmail } = req.body;
 
     // Basic validation
-    if (!amount || !paymentMethod) {
-      return res.status(400).json({ message: 'Amount and Payment Method are required.' });
+    if (!amount || !paymentMethod || !donorName || !donorEmail) {
+      return res.status(400).json({ message: 'Name, Email, Amount and Payment Method are required.' });
     }
 
     // Save to database
     const donation = await Donation.create({
+      donorName,
+      donorEmail,
       amount,
       paymentMethod
     });

@@ -28,6 +28,8 @@ app.use('/uploads', express.static('uploads')); // Serve uploaded files
 app.use('/api/animals', require('./routes/animalRoutes'));
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/donations', require('./routes/donationRoutes'));
+app.use('/api/adoptions', require('./routes/adoptionRoutes'));
+app.use('/api/admin', require('./routes/adminRoutes'));
 
 // The new dynamic event routes
 const eventRoutes = require('./routes/eventRoutes');

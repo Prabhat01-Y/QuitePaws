@@ -1,0 +1,315 @@
+/* =========================================
+   Shared Admin Page Layout
+========================================= */
+
+.admin-page {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.admin-page-header {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.admin-page-header h2 {
+  margin: 0 0 4px 0;
+  color: #1e293b;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.admin-page-header p {
+  margin: 0;
+  color: #64748b;
+}
+
+/* =========================================
+   Metrics Grid (Dashboard)
+========================================= */
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.metric-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.metric-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.metric-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.metric-icon.animal { background: #e0f2fe; color: #0284c7; }
+.metric-icon.adoption { background: #fef08a; color: #a16207; }
+.metric-icon.rescue { background: #fee2e2; color: #b91c1c; }
+.metric-icon.volunteer { background: #dcfce7; color: #15803d; }
+.metric-icon.user { background: #f3e8ff; color: #7e22ce; }
+
+.metric-info h4 {
+  margin: 0 0 4px 0;
+  color: #64748b;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metric-info h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+/* =========================================
+   Data Tables
+========================================= */
+
+.admin-table-container {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th {
+  background: #f8fafc;
+  padding: 16px 20px;
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.admin-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #334155;
+  font-size: 0.95rem;
+  vertical-align: middle;
+}
+
+.admin-table tr:hover {
+  background: #f8fafc;
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  display: inline-block;
+}
+
+.status-pending { background: #fef08a; color: #a16207; }
+.status-approved { background: #dcfce7; color: #15803d; }
+.status-rejected { background: #fee2e2; color: #b91c1c; }
+.status-in-progress { background: #e0f2fe; color: #0284c7; }
+.status-resolved { background: #dcfce7; color: #15803d; }
+
+/* Type Badges */
+.type-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.type-volunteer { background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; }
+.type-applicant { background: #fff7ed; color: #ea580c; border: 1px solid #ffedd5; }
+.type-admin { background: #ecfdf5; color: #059669; border: 1px solid #d1fae5; }
+
+/* User Info Layout */
+.admin-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6d28d9, #c084fc);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.admin-email-text {
+  color: #94a3b8;
+  font-size: 0.8rem;
+}
+
+.admin-contact-cell {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.admin-experience-cell {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.admin-date-text {
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.admin-pref-text {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.85rem;
+}
+
+.admin-empty-icon {
+  font-size: 40px;
+  margin-bottom: 15px;
+  opacity: 0.5;
+}
+
+/* Action Buttons */
+.action-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 8px;
+  transition: opacity 0.2s;
+}
+
+.action-btn:hover {
+  opacity: 0.8;
+}
+
+.btn-approve { background: #10b981; color: white; }
+.btn-reject { background: #ef4444; color: white; }
+.btn-view { background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; }
+
+/* Status Dropdown */
+.status-select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  font-family: inherit;
+  font-size: 0.85rem;
+  background: white;
+  cursor: pointer;
+}
+
+/* States */
+.admin-loading,
+.admin-error {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.1rem;
+  color: #64748b;
+}
+
+.admin-error {
+  color: #ef4444;
+}
+
+.admin-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* Completion Proof */
+.completion-proof-box {
+  margin-top: 12px;
+  padding: 10px;
+  background: #f0fdf4;
+  border: 1px dashed #22c55e;
+  border-radius: 8px;
+  max-width: 300px;
+}
+
+.completion-proof-box small {
+  color: #15803d;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.admin-rescue-note {
+  font-size: 0.85rem;
+  color: #334155;
+  margin: 4px 0 8px 0;
+  font-style: italic;
+}
+
+.admin-proof-photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.admin-proof-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  border: 1px solid #d1fae5;
+}
+
+.admin-proof-img:hover {
+  transform: scale(1.1);
+  z-index: 10;
+}

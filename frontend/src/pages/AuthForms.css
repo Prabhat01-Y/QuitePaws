@@ -1,27 +1,27 @@
 /* =========================================
-   Login Page Wrapper
+   Auth Pages Wrapper (Shared by Login & Signup)
 ========================================= */
 
-.login-wrapper {
+.auth-wrapper {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #0d2b1a 0%, #1c0522 100%);
-  padding: 20px;
+  padding: 80px 20px;
   font-family: 'Raleway', sans-serif;
 }
 
 /* =========================================
-   Login Card
+   Auth Card
 ========================================= */
 
-.login-card {
+.auth-card {
   background: #ffffff;
   border-radius: 16px;
   padding: 48px 44px;
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
   text-align: center;
   animation: slideUp 0.4s ease forwards;
@@ -32,19 +32,19 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.login-icon {
+.auth-icon {
   font-size: 3rem;
   margin-bottom: 12px;
 }
 
-.login-card h2 {
+.auth-card h2 {
   font-size: 1.8rem;
   font-weight: 800;
   color: #1a1a1a;
   margin: 0 0 6px;
 }
 
-.login-subtitle {
+.auth-subtitle {
   color: #888;
   font-size: 0.9rem;
   margin: 0 0 32px;
@@ -54,26 +54,28 @@
    Form Fields
 ========================================= */
 
-.login-form {
+.auth-form {
   display: flex;
   flex-direction: column;
   gap: 18px;
   text-align: left;
 }
 
-.login-field {
+.auth-field {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-.login-field label {
+.auth-field label {
   font-size: 0.85rem;
   font-weight: 700;
   color: #444;
 }
 
-.login-field input {
+.auth-field input[type="text"],
+.auth-field input[type="email"],
+.auth-field input[type="password"] {
   width: 100%;
   padding: 12px 14px;
   border: 1.5px solid #ddd;
@@ -86,11 +88,17 @@
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.login-field input:focus {
+.auth-field input:focus {
   outline: none;
   border-color: #01e37f;
   box-shadow: 0 0 0 3px rgba(1, 227, 127, 0.15);
   background: #fff;
+}
+
+.auth-field small {
+  color: #777;
+  font-size: 0.75rem;
+  margin-top: 2px;
 }
 
 /* Password field with toggle */
@@ -115,11 +123,52 @@
   line-height: 1;
 }
 
+/* Radio buttons for roles */
+.role-selection label {
+   margin-bottom: 4px;
+}
+
+.role-options {
+  display: flex;
+  gap: 12px;
+}
+
+.role-radio {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  color: #333 !important;
+  background: #f4f4f4;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1.5px solid transparent;
+  flex: 1;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.role-radio:hover {
+  background: #eaeaea;
+}
+
+.role-radio input:checked + span {
+  color: #01e37f;
+  font-weight: 700;
+}
+
+.role-radio:has(input:checked) {
+  border-color: #01e37f;
+  background: rgba(1, 227, 127, 0.05);
+}
+
 /* =========================================
    Error Message
 ========================================= */
 
-.login-error {
+.auth-error {
   background: #fff0f0;
   border: 1px solid #ffcccc;
   border-radius: 6px;
@@ -133,7 +182,7 @@
    Submit Button
 ========================================= */
 
-.login-btn {
+.auth-btn {
   width: 100%;
   padding: 14px;
   background: linear-gradient(45deg, #01e37f, #00c86f);
@@ -148,12 +197,12 @@
   box-shadow: 0 4px 15px rgba(1, 227, 127, 0.35);
 }
 
-.login-btn:hover {
+.auth-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 22px rgba(1, 227, 127, 0.55);
 }
 
-.login-btn:disabled {
+.auth-btn:disabled {
   background: #aaa;
   cursor: not-allowed;
   transform: none;
@@ -161,11 +210,31 @@
 }
 
 /* =========================================
+   Switch Link
+========================================= */
+
+.auth-switch {
+  margin-top: 24px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.auth-switch a {
+  color: #00c86f;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================
    Responsive
 ========================================= */
 
 @media (max-width: 480px) {
-  .login-card {
+  .auth-card {
     padding: 36px 24px;
   }
 }

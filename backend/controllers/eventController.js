@@ -32,9 +32,49 @@ const getAllEvents = async (req, res) => {
     }
 };
 
-// Export all three functions
+// 4. Delete Event
+const deleteEvent = async (req, res) => {
+    try {
+        const event = await Event.findByIdAndDelete(req.params.id);
+        if (!event) return res.status(404).json({ message: 'Event not found' });
+        res.status(200).json({ message: 'Event deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting event', error: error.message });
+    }
+};
+
+// 5. Register for Event
+const registerForEvent = async (req, res) => {
+    try {
+        const eventId = req.params.id;
+        const userId = req.user._id;
+
+        const event = await Event.findById(eventId);
+        if (!event) {
+            return res.status(404).json({ message: 'Event not found' });
+        }
+
+        if (event.registeredVolunteers.includes(userId)) {
+            return res.status(400).json({ message: 'Already registered for this event' });
+        }
+
+        if (event.slots > 0 && event.registeredVolunteers.length >= event.slots) {
+             return res.status(400).json({ message: 'Event slots are full' });
+        }
+
+        event.registeredVolunteers.push(userId);
+        await event.save();
+        res.status(200).json({ message: 'Successfully registered for the event', event });
+    } catch (error) {
+        res.status(500).json({ message: 'Error registering for event', error: error.message });
+    }
+};
+
+// Export all functions
 module.exports = {
     createEvent,
     getEventBySlug,
-    getAllEvents 
+    getAllEvents,
+    deleteEvent,
+    registerForEvent
 };

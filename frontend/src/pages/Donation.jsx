@@ -25,7 +25,12 @@ const Donation = () => {
 
   //  Backend Donation  Logic
   const [showForm, setShowForm] = useState(false);
-  const [formData, setFormData] = useState({ amount: '', paymentMethod: 'UPI' });
+  const [formData, setFormData] = useState({ 
+    donorName: '', 
+    donorEmail: '', 
+    amount: '', 
+    paymentMethod: 'UPI' 
+  });
   const [statusMessage, setStatusMessage] = useState('');
 
   const handleDonationSubmit = async (e) => {
@@ -39,6 +44,8 @@ const Donation = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          donorName: formData.donorName,
+          donorEmail: formData.donorEmail,
           amount: Number(formData.amount),
           paymentMethod: formData.paymentMethod,
         }),
@@ -46,8 +53,7 @@ const Donation = () => {
 
       if (response.ok) {
         setStatusMessage('Thank you for your generosity! Your donation has been recorded.');
-        setFormData({ amount: '', paymentMethod: 'UPI' }); // Reset form
-        
+        setFormData({ donorName: '', donorEmail: '', amount: '', paymentMethod: 'UPI' }); // Reset form
         
         setTimeout(() => {
           setShowForm(false);
@@ -78,30 +84,58 @@ const Donation = () => {
           <div className="donation-form-container">
             <h3>Complete Your Donation</h3>
             <form onSubmit={handleDonationSubmit} className="inline-donation-form">
-              <div className="form-group">
-                <label>Amount (₹)</label>
-                <input 
-                  type="number" 
-                  min="1"
-                  required 
-                  value={formData.amount} 
-                  onChange={(e) => setFormData({ ...formData, amount: e.target.value })} 
-                  placeholder="e.g. 500" 
-                />
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Full Name</label>
+                  <input 
+                    type="text" 
+                    required 
+                    value={formData.donorName} 
+                    onChange={(e) => setFormData({ ...formData, donorName: e.target.value })} 
+                    placeholder="Enter your name" 
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Email Address</label>
+                  <input 
+                    type="email" 
+                    required 
+                    value={formData.donorEmail} 
+                    onChange={(e) => setFormData({ ...formData, donorEmail: e.target.value })} 
+                    placeholder="example@gmail.com" 
+                  />
+                </div>
               </div>
-              <div className="form-group">
-                <label>Payment Method</label>
-                <select 
-                  value={formData.paymentMethod} 
-                  onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
-                >
-                  <option value="UPI">UPI</option>
-                  <option value="Bank Transfer">Bank Transfer</option>
-                  <option value="QR Code">QR Code</option>
-                </select>
+
+              <div className="form-row">
+                <div className="form-group">
+                   <label>Amount (₹)</label>
+                   <input 
+                     type="number" 
+                     min="1"
+                     required 
+                     value={formData.amount} 
+                     onChange={(e) => setFormData({ ...formData, amount: e.target.value })} 
+                     placeholder="e.g. 500" 
+                   />
+                </div>
+                <div className="form-group">
+                  <label>Payment Method</label>
+                  <select 
+                    value={formData.paymentMethod} 
+                    onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
+                  >
+                    <option value="UPI">UPI</option>
+                    <option value="Bank Transfer">Bank Transfer</option>
+                    <option value="QR Code">QR Code</option>
+                  </select>
+                </div>
               </div>
-              <button type="submit" className="submit-donation-btn">Confirm Donation</button>
-              <button type="button" className="cancel-btn" onClick={() => setShowForm(false)}>Cancel</button>
+
+              <div className="form-actions">
+                <button type="submit" className="submit-donation-btn">Confirm Donation</button>
+                <button type="button" className="cancel-btn" onClick={() => setShowForm(false)}>Cancel</button>
+              </div>
             </form>
             {statusMessage && <p className="status-message">{statusMessage}</p>}
           </div>

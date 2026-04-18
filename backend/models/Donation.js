@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 
 const donationSchema = new mongoose.Schema({
+  donorName: {
+    type: String,
+    required: [true, 'Please provide your name']
+  },
+  donorEmail: {
+    type: String,
+    required: [true, 'Please provide your email']
+  },
   amount: {
     type: Number,
     required: [true, 'Please provide a donation amount']

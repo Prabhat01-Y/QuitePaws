@@ -1,17 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const { getAnimals, createAnimal } = require('../controllers/animalController');
+const { getAnimals, createAnimal, getAnimalById } = require('../controllers/animalController');
 const upload = require('../middleware/uploadAnimal');
-const protect = require('../middleware/authMiddleware');
+const { protect, adminOnly } = require('../middleware/authMiddleware');
 
 // Public: get all animals
 router.get('/', getAnimals);
 
+// Public: get a single animal by ID
+router.get('/:id', getAnimalById);
+
 // Protected: create animal (admin only)
-router.post('/', protect, createAnimal);
+router.post('/', protect, adminOnly, createAnimal);
 
 // Protected: upload animal image (admin only)
-router.post('/upload-image', protect, upload.single('image'), (req, res) => {
+router.post('/upload-image', protect, adminOnly, upload.single('image'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No image file uploaded' });
   }

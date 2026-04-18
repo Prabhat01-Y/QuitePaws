@@ -7,8 +7,12 @@ const {
   createReport,
   getReportById,
   updateReport,
-  deleteReport
+  deleteReport,
+  getAvailableRescues,
+  claimRescue,
+  completeRescue
 } = require('../controllers/emergencyReportController');
+const { protect } = require('../middleware/authMiddleware');
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
@@ -37,7 +41,12 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
 });
 
-// Routes
+// Volunteer Routes
+router.get('/volunteer/available', protect, getAvailableRescues);
+router.put('/:id/claim', protect, claimRescue);
+router.put('/:id/complete', protect, upload.array('photos', 5), completeRescue);
+
+// Public/Admin Routes
 router.get('/', getReports);
 router.post('/', upload.single('photo'), createReport);
 router.get('/:id', getReportById);

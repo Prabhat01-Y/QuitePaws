@@ -18,6 +18,10 @@ const emergencyReportSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide the incident address']
   },
+  location: {
+    lat: { type: Number, required: false },
+    lng: { type: Number, required: false }
+  },
   description: {
     type: String,
     required: [true, 'Please describe the incident']
@@ -40,6 +44,18 @@ const emergencyReportSchema = new mongoose.Schema({
     type: String,
     enum: ['pending', 'in-progress', 'resolved'],
     default: 'pending'
+  },
+  assignedVolunteer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null
+  },
+  completionPhotos: [{
+    type: String  // filenames of photos uploaded when marking complete
+  }],
+  completionNote: {
+    type: String,
+    default: ''
   },
   createdAt: {
     type: Date,

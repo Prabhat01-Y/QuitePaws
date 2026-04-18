@@ -1,113 +1,338 @@
-.adoption-form-wrapper {
-  background: url('https://png.pngtree.com/thumb_back/fh260/back_our/20190622/ourmid/pngtree-simple-wind-cat-pet-cat-food-dog-food-footprint-pet-shop-image_227158.jpg') no-repeat center center fixed;
-  background-size: cover;
-  min-height: 100vh;
+.adoption-wizard-page {
+  background-color: #f8fafc;
+  min-height: 90vh;
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.adoption-wizard-container {
+  display: flex;
+  background: white;
+  width: 100%;
+  max-width: 1000px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* Left Side: Animal Info */
+.wizard-left {
+  width: 40%;
+  background-color: #f1f5f9;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid #e2e8f0;
+}
+
+.animal-image-wrapper {
+  width: 100%;
+  aspect-ratio: 4/5;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.main-animal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.animal-name-title {
+  color: #1e293b;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.animal-tags {
+  color: #64748b;
+  font-size: 14px;
+  margin-bottom: 25px;
+}
+
+.thumbnail-gallery {
+  display: flex;
+  gap: 10px;
+}
+
+.thumb {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.thumb.active {
+  border-color: #3b82f6; /* Screenshot blue */
+}
+
+.thumb.placeholder {
+  background: #e2e8f0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
+  font-size: 20px;
 }
 
-.form-container {
-  width: 100%;
-  max-width: 450px;
-  padding: 40px 50px;
-  background-color: rgba(255, 255, 255, 0.85);
-  text-align: center;
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
-}
-
-.form-header {
-  color: #e1330b;
-  font-size: 2em;
-  font-weight: bold;
-  margin-bottom: 30px;
-}
-
-.form {
+/* Right Side: Form Wizard */
+.wizard-right {
+  width: 60%;
+  padding: 40px;
   display: flex;
   flex-direction: column;
 }
 
-.input-box {
-  border-bottom: 2px solid #162938;
-  margin: 15px 0px;
-  position: relative;
-  text-align: left;
+/* Step Indicator */
+.step-indicator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  padding: 0 20px;
 }
 
-.input-box label {
-  position: absolute;
-  top: 10px;
-  left: 40px;
-  transition: 0.2s ease all;
-  font-size: 1em;
-  color: #555;
-  pointer-events: none;
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.5;
+  transition: all 0.3s;
 }
 
-
-.input-box .date-label {
-  top: -15px;
-  font-size: 0.8em;
-  color: #e1330b;
+.step.active {
+  opacity: 1;
 }
 
-.input-box input, .input-box textarea {
-  width: 100%;
+.step-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.step.active .step-circle {
+  background: #3b82f6;
+}
+
+.step span {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.step.active span {
+  color: #3b82f6;
+}
+
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: #e2e8f0;
+  margin: 0 15px 20px;
+}
+
+/* Form Layout */
+.form-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.step-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.step-section h3 {
+  font-size: 24px;
+  color: #1e293b;
+  margin-bottom: 5px;
+}
+
+.form-desc {
+  color: #64748b;
+  font-size: 14px;
+  margin-bottom: 25px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.input-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group input[type="tel"],
+.input-group input[type="number"],
+.input-group select,
+.input-group textarea {
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  color: #1e293b !important;
+  background-color: #ffffff !important;
   outline: none;
-  background: transparent;
-  border: none;
-  padding: 10px 10px 10px 40px;
-  color: #162938;
-  font-size: 1em;
+  transition: border 0.3s;
+  width: 100%;
   box-sizing: border-box;
 }
 
-.input-box textarea {
-  height: 80px;
-  resize: none;
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+  border-color: #3b82f6;
 }
 
-.input-box input:focus + label,
-.input-box input:not(:placeholder-shown) + label,
-.input-box textarea:focus + label,
-.input-box textarea:not(:placeholder-shown) + label {
-  top: -15px;
-  font-size: 0.8em;
-  color: #e1330b;
-  font-weight: bold;
+.radio-group {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  height: 42px;
 }
 
-.icon {
-  position: absolute;
-  left: 5px;
-  top: 12px;
-  color: #162938;
-  font-size: 1.2em;
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: normal;
+  font-size: 14px;
+  cursor: pointer;
 }
 
-.submit-btn {
-  width: 100%;
-  padding: 12px;
-  background-color: #e1330b;
+/* Actions */
+.wizard-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 30px;
+}
+
+.wizard-btn-primary {
+  background: #3b82f6;
   color: white;
   border: none;
-  border-radius: 5px;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
   cursor: pointer;
-  font-size: 1.1em;
-  font-weight: bold;
-  margin-top: 20px;
-  transition: background-color 0.3s ease;
+  transition: background 0.2s;
 }
 
-.submit-btn:hover {
-  background-color: #c22908;
+.wizard-btn-primary:hover:not(:disabled) {
+  background: #2563eb;
 }
 
-.success-message h2 {
-  color: #006f3c;
-  margin-bottom: 15px;
+.wizard-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.wizard-btn-secondary {
+  background: white;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.wizard-btn-secondary:hover {
+  background: #f8fafc;
+  color: #1e293b;
+}
+
+.error-banner {
+  background: #fef2f2;
+  color: #dc2626;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  border: 1px solid #fecaca;
+}
+
+/* Success Step */
+.success-step {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 0;
+}
+
+.success-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.success-step h3 {
+  font-size: 28px;
+}
+
+/* Fade Animation */
+.fade-in {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .adoption-wizard-container {
+    flex-direction: column;
+  }
+  .wizard-left {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 20px;
+  }
+  .wizard-right {
+    width: 100%;
+    padding: 20px;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
 }

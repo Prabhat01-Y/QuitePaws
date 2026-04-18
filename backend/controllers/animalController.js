@@ -37,7 +37,24 @@ const createAnimal = async (req, res) => {
   }
 };
 
+// @desc    Get a specific animal by ID
+// @route   GET /api/animals/:id
+// @access  Public
+const getAnimalById = async (req, res) => {
+  try {
+    const animal = await Animal.findById(req.params.id);
+    if (animal) {
+      res.json(animal);
+    } else {
+      res.status(404).json({ message: 'Animal not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching animal', error: error.message });
+  }
+};
+
 module.exports = {
   getAnimals,
-  createAnimal
+  createAnimal,
+  getAnimalById
 };

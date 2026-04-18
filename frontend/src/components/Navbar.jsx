@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
 const Navbar = () => {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, isAdmin, isVolunteer, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -14,16 +14,33 @@ const Navbar = () => {
 
   return (
     <header id="header" className="navbar">
-      <Link to="/" className="logo">Quietpaws</Link>
+      <Link to="/" className="logo">
+        <span className="logo-icon">🐾</span>
+        <div className="logo-text-col">
+          <span className="logo-title">QUIETPAWS</span>
+          <span className="logo-sub">COMPASSION. PROTECTION. PRESERVATION.</span>
+        </div>
+      </Link>
       <ul>
-        <li><Link to="/">Home</Link></li>
+        <li><Link to="/" className="active">Home</Link></li>
         <li><Link to="/about">About</Link></li>
-        <li><Link to="/adopt">Adoption</Link></li>
+
+        {/* Only show Adoption & Volunteer for public / non-role users */}
+        {!isAdmin && !isVolunteer && (
+          <li><Link to="/adopt">Adoption</Link></li>
+        )}
+
+        <li><Link to="/donate">Donate</Link></li>
         <li><Link to="/contact">Contact</Link></li>
 
         {isAuthenticated ? (
           <>
-            <li><Link to="/admin/add-animal" className="admin-nav-link">Admin</Link></li>
+            {isAdmin && (
+              <li><Link to="/admin" className="admin-nav-link">Admin Panel</Link></li>
+            )}
+            {isVolunteer && (
+              <li><Link to="/volunteer-dashboard" className="admin-nav-link">My Dashboard</Link></li>
+            )}
             <li>
               <button className="logout-nav-btn" onClick={handleLogout}>
                 Logout
@@ -31,7 +48,10 @@ const Navbar = () => {
             </li>
           </>
         ) : (
-          <li><Link to="/admin/login" className="admin-nav-link">Admin</Link></li>
+          <>
+            <li><Link to="/volunteer">Volunteer</Link></li>
+            <li><Link to="/login" className="admin-nav-link">Sign In</Link></li>
+          </>
         )}
       </ul>
     </header>

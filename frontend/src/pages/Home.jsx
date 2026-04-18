@@ -1,28 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
-
-
-import bird1Img from '../assets/b1.jpg';
-import bird2Img from '../assets/2bi.png';
-import treeImg from '../assets/tree.png';
-import rockImg from '../assets/rock.png';
-import lakeImg from '../assets/lake.png';
-
-
 import b1Img from '../assets/b1.jpg';
-import c1Img from '../assets/c1.png';
-import d1Img from '../assets/d1.png';
 
 const Home = () => {
-  
   const [activeQA, setActiveQA] = useState(null);
 
   const toggleQA = (index) => {
     setActiveQA(activeQA === index ? null : index);
   };
 
-  
   const faqs = [
     {
       question: "How can I adopt a pet?",
@@ -38,60 +25,79 @@ const Home = () => {
     }
   ];
 
-  
-  useEffect(() => {
-    const text = document.getElementById('text');
-    const bird1 = document.getElementById('bird1');
-    const bird2 = document.getElementById('bird2');
-    const btn = document.getElementById('btn');
-    const rocks = document.getElementById('rocks');
-    const forest = document.getElementById('forest');
-    const header = document.getElementById('header');
-
-    const handleScroll = () => {
-      let value = window.scrollY;
-      
-      if (text) text.style.top = 50 + value * -0.1 + '%';
-      if (bird2) {
-        bird2.style.top = value * -1.5 + 'px';
-        bird2.style.left = value * 2 + 'px';
-      }
-      if (bird1) {
-        bird1.style.top = value * -1.5 + 'px';
-        bird1.style.left = value * -5 + 'px';
-      }
-      if (btn) btn.style.marginTop = value * 1.5 + 'px';
-      if (rocks) rocks.style.top = value * -0.12 + 'px';
-      if (forest) forest.style.top = value * 0.25 + 'px';
-      if (header) header.style.top = value * 0.5 + 'px';
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    
-    
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <div className="home-wrapper">
       {/* Hero Section */}
-      <section className="parallax-section">
-        <h2 id="text"><span>An Adventure of Saving Lives!</span><br/>Rescue</h2>
-        <img src={bird1Img} id="bird1" alt="bird" />
-        <img src={bird2Img} id="bird2" alt="bird" />
-        <img src={treeImg} id="forest" alt="forest" />
-        <div id="btn" className="hero-buttons">
-          <Link to="/donate" className="hero-btn hero-btn--donate">Donation</Link>
-          <Link to="/contact" className="hero-btn hero-btn--emergency">
-            🚨 Emergency Report
-          </Link>
+      <section className="static-hero" style={{ backgroundImage: `url(${b1Img})` }}>
+        <div className="static-hero-overlay"></div>
+        
+        <div className="hero-content">
+          <div className="hero-subtitle">
+            <span className="leaf-icon">🍃</span>
+            <span>AN ADVENTURE OF</span>
+            <span className="line-dec"></span>
+          </div>
+          
+          <h1 className="hero-title">SAVING LIVES</h1>
+          
+          <p className="hero-desc">
+            Rescuing wildlife, restoring hope, and protecting<br/>
+            the beauty of our planet.
+          </p>
+          
+          <div className="hero-buttons">
+            <Link to="/emergency-report" className="hero-btn hero-btn--red">
+              🚨 EMERGENCY REPORT <span className="arrow">›</span>
+            </Link>
+            <Link to="/donate" className="hero-btn hero-btn--green">
+              🤲 DONATION <span className="arrow">›</span>
+            </Link>
+          </div>
         </div>
-        <img src={rockImg} id="rocks" alt="rocks" />
-        <img src={lakeImg} id="water" alt="water" />
+
+        {/* Feature Cards overlap */}
+        <div className="hero-features">
+          <div className="hf-card">
+            <div className="hf-icon"><span className="hf-i">🛡️</span></div>
+            <div className="hf-text">
+              <h4>Wildlife Rescue</h4>
+              <p>Quick response for injured animals</p>
+            </div>
+          </div>
+          <div className="hf-card">
+            <div className="hf-icon"><span className="hf-i">🌿</span></div>
+            <div className="hf-text">
+              <h4>Habitat Protection</h4>
+              <p>Preserving natural homes & ecosystems</p>
+            </div>
+          </div>
+          <div className="hf-card">
+            <div className="hf-icon"><span className="hf-i">👥</span></div>
+            <div className="hf-text">
+              <h4>Community Support</h4>
+              <p>Uniting people for a greater cause</p>
+            </div>
+          </div>
+          <div className="hf-card">
+            <div className="hf-icon"><span className="hf-i">💚</span></div>
+            <div className="hf-text">
+              <h4>Make a Difference</h4>
+              <p>Your support saves lives</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom wave curve */}
+        <div className="hero-wave">
+          <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,60 C320,120 420,-40 720,60 C1020,160 1120,0 1440,60 L1440,150 L0,150 Z" fill="#f8eedf"></path>
+          </svg>
+          <div className="wave-icon-center">🐾</div>
+        </div>
       </section>
 
       {/* Mission Section */}
-      <div className="sec">
+      <div className="sec" style={{ background: '#f8eedf', padding: '60px 40px', marginTop: '-5px' }}>
         <h2>🐾 Our Mission</h2>
         <p>
           Every day, countless animals suffer on the streets, abandoned, injured, and left without food or shelter.
@@ -106,38 +112,15 @@ const Home = () => {
         </p>
       </div>
 
-      {/* Rescue Stories Cards */}
-      <div className="card-container">
-        {[b1Img, c1Img, d1Img].map((imgSrc, idx) => ( 
-          <div className="card" key={idx}>
-            <div className="face face1">
-              <div className="content">
-                <img src={imgSrc} alt="Rescue animal" />
-                <h3>Story {idx + 1}</h3>
-              </div>
-            </div>
-            <div className="face face2">
-              <div className="content">
-                <p><b>Bruno’s Rescue:</b> Found injured on the streets, Bruno was given medical care and is now happily adopted.</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
       {/* Q&A Section */}
-      <div className="qna-section">
+      <div className="qna-section" style={{ background: '#f8eedf' }}>
         <h2 style={{ textAlign: 'center', color: '#01e37f', marginBottom: '30px' }}>Q&A</h2>
-        
-        {/* Mapping through the new faqs array */}
         {faqs.map((faq, idx) => (
           <div className="question" key={idx}>
             <button className="qna-toggle" onClick={() => toggleQA(idx)}>
               {faq.question}
               <span className="qna-icon">{activeQA === idx ? '−' : '+'}</span>
             </button>
-            
-            {/* The Answer Container */}
             <div className={`qna-answer-container ${activeQA === idx ? 'show' : ''}`}>
               <p className="qna-answer">{faq.answer}</p>
             </div>
