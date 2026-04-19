@@ -53,8 +53,48 @@ const getAnimalById = async (req, res) => {
   }
 };
 
+// @desc    Update animal profile
+// @route   PUT /api/animals/:id
+// @access  Private/Admin
+const updateAnimal = async (req, res) => {
+  try {
+    const animal = await Animal.findById(req.params.id);
+    if (!animal) {
+      return res.status(404).json({ message: 'Animal not found' });
+    }
+
+    const updatedAnimal = await Animal.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    );
+    res.json(updatedAnimal);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating animal', error: error.message });
+  }
+};
+
+// @desc    Delete animal profile
+// @route   DELETE /api/animals/:id
+// @access  Private/Admin
+const deleteAnimal = async (req, res) => {
+  try {
+    const animal = await Animal.findById(req.params.id);
+    if (!animal) {
+      return res.status(404).json({ message: 'Animal not found' });
+    }
+
+    await animal.deleteOne();
+    res.json({ message: 'Animal removed successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting animal', error: error.message });
+  }
+};
+
 module.exports = {
   getAnimals,
   createAnimal,
-  getAnimalById
+  getAnimalById,
+  updateAnimal,
+  deleteAnimal
 };

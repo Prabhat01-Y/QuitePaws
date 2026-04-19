@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
-import b1Img from '../assets/b1.jpg';
 
 const Home = () => {
   const [activeQA, setActiveQA] = useState(null);
@@ -12,121 +11,163 @@ const Home = () => {
 
   const faqs = [
     {
-      question: "How can I adopt a pet?",
-      answer: "You can visit our adoption page, fill out an application, and schedule a visit."
+      question: "How can I adopt a pet at QuietPaws?",
+      answer: "Browsing our portal is the first step. Once you find a furry friend you connect with, submit an application. Our team will review it and schedule a virtual or in-person meeting."
     },
     {
-      question: "How do I become a volunteer?",
-      answer: "Fill out our volunteer form, and we will connect you with rescue organizations."
+      question: "What is required to become a volunteer?",
+      answer: "You just need a compassionate heart and some free time. We provide all necessary training for rescue reporting and animal care. Sign up through our Volunteer portal to get started!"
     },
     {
-      question: "Can I foster an animal before adopting?",
-      answer: "Yes! Many shelters offer foster programs where you can care for a pet temporarily."
+      question: "Can I foster an animal temporarily?",
+      answer: "Yes! Fostering is a vital part of our mission. It helps animals transition from rescue to home life. We cover medical expenses and provide basic supplies for all our fosters."
     }
   ];
 
   return (
-    <div className="home-wrapper">
-      {/* Hero Section */}
-      <section className="static-hero" style={{ backgroundImage: `url(${b1Img})` }}>
-        <div className="static-hero-overlay"></div>
-        
+    <div className="home-container">
+      {/* 1. Dynamic Hero Section */}
+      <section className="hero-section">
+        <div className="hero-overlay"></div>
         <div className="hero-content">
-          <div className="hero-subtitle">
-            <span className="leaf-icon">🍃</span>
-            <span>AN ADVENTURE OF</span>
-            <span className="line-dec"></span>
-          </div>
-          
-          <h1 className="hero-title">SAVING LIVES</h1>
-          
-          <p className="hero-desc">
-            Rescuing wildlife, restoring hope, and protecting<br/>
-            the beauty of our planet.
+          <div className="hero-badge">🐾 Saving Lives Every Day</div>
+          <h1 className="hero-main-title">A Quiter Corner for <br/><span>Every Paw in Need</span></h1>
+          <p className="hero-subtitle">
+            Connecting abandoned animals with loving hearts. 
+            From emergency rescues to forever homes, we're building a community that cares.
           </p>
-          
-          <div className="hero-buttons">
-            <Link to="/emergency-report" className="hero-btn hero-btn--red">
-              🚨 EMERGENCY REPORT <span className="arrow">›</span>
+          <div className="hero-cta-group">
+            <Link to="/emergency-report" className="cta-btn cta-btn--emergency">
+              Report Emergency 🚨
             </Link>
-            <Link to="/donate" className="hero-btn hero-btn--green">
-              🤲 DONATION <span className="arrow">›</span>
+            <Link to="/adopt" className="cta-btn cta-btn--secondary">
+              Find a Friend 🐾
             </Link>
           </div>
-        </div>
-
-        {/* Feature Cards overlap */}
-        <div className="hero-features">
-          <div className="hf-card">
-            <div className="hf-icon"><span className="hf-i">🛡️</span></div>
-            <div className="hf-text">
-              <h4>Wildlife Rescue</h4>
-              <p>Quick response for injured animals</p>
-            </div>
-          </div>
-          <div className="hf-card">
-            <div className="hf-icon"><span className="hf-i">🌿</span></div>
-            <div className="hf-text">
-              <h4>Habitat Protection</h4>
-              <p>Preserving natural homes & ecosystems</p>
-            </div>
-          </div>
-          <div className="hf-card">
-            <div className="hf-icon"><span className="hf-i">👥</span></div>
-            <div className="hf-text">
-              <h4>Community Support</h4>
-              <p>Uniting people for a greater cause</p>
-            </div>
-          </div>
-          <div className="hf-card">
-            <div className="hf-icon"><span className="hf-i">💚</span></div>
-            <div className="hf-text">
-              <h4>Make a Difference</h4>
-              <p>Your support saves lives</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom wave curve */}
-        <div className="hero-wave">
-          <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,60 C320,120 420,-40 720,60 C1020,160 1120,0 1440,60 L1440,150 L0,150 Z" fill="#f8eedf"></path>
-          </svg>
-          <div className="wave-icon-center">🐾</div>
         </div>
       </section>
 
-      {/* Mission Section */}
-      <div className="sec" style={{ background: '#f8eedf', padding: '60px 40px', marginTop: '-5px' }}>
-        <h2>🐾 Our Mission</h2>
-        <p>
-          Every day, countless animals suffer on the streets, abandoned, injured, and left without food or shelter.
-          Our mission is to be their voice, their shelter, and their hope...
-        </p>
-
-        <h2>💡 How Our Platform Helps ?</h2>
-        <p>
-          ✔ Animal Rescue & Medical Care: We provide emergency rescues...<br/>
-          ✔ Fundraising for Treatment: Shelters can raise funds...<br/>
-          ✔ Adoption Services: Find loving homes...
-        </p>
-      </div>
-
-      {/* Q&A Section */}
-      <div className="qna-section" style={{ background: '#f8eedf' }}>
-        <h2 style={{ textAlign: 'center', color: '#01e37f', marginBottom: '30px' }}>Q&A</h2>
-        {faqs.map((faq, idx) => (
-          <div className="question" key={idx}>
-            <button className="qna-toggle" onClick={() => toggleQA(idx)}>
-              {faq.question}
-              <span className="qna-icon">{activeQA === idx ? '−' : '+'}</span>
-            </button>
-            <div className={`qna-answer-container ${activeQA === idx ? 'show' : ''}`}>
-              <p className="qna-answer">{faq.answer}</p>
+      {/* 2. Services / What We Do (Visual Impact) */}
+      <section className="home-services sec-padding">
+        <div className="container">
+          <div className="section-header">
+            <span className="sub-title">What We Do</span>
+            <h2>Our Core Pillars</h2>
+          </div>
+          <div className="services-grid">
+            <div className="service-card">
+              <div className="service-icon">📍</div>
+              <h3>Emergency Rescue</h3>
+              <p>Real-time reporting system that alerts rescuers instantly when an animal is in distress.</p>
+              <Link to="/emergency-report" className="service-link">Learn More ➔</Link>
+            </div>
+            <div className="service-card">
+              <div className="service-icon">🏠</div>
+              <h3>Smart Adoption</h3>
+              <p>Transparent matching process with detailed health records and temperament notes.</p>
+              <Link to="/adopt" className="service-link">Browse Pets ➔</Link>
+            </div>
+            <div className="service-card">
+              <div className="service-icon">🤝</div>
+              <h3>Volunteer Network</h3>
+              <p>Join a nationwide community of animal advocates dedicated to field work and fostering.</p>
+              <Link to="/volunteer" className="service-link">Join Us ➔</Link>
+            </div>
+            <div className="service-card">
+              <div className="service-icon">💝</div>
+              <h3>Donation Drive</h3>
+              <p>Transparent fundraising for critical surgeries and shelter supplies with direct impact tracking.</p>
+              <Link to="/donate" className="service-link">Donate Now ➔</Link>
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      </section>
+
+      {/* 3. Featured Rescues / Success Stories (Animal Friendly) */}
+      <section className="featured-rescues sec-padding">
+        <div className="container">
+          <div className="section-header">
+            <span className="sub-title">Success Stories</span>
+            <h2>Recent Happy Tails</h2>
+          </div>
+          <div className="rescue-gallery">
+            <div className="rescue-item">
+              <div className="rescue-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=1000" alt="Rescued Dog" />
+              </div>
+              <div className="rescue-info">
+                <h4>Buddy</h4>
+                <span>Rescued from Mumbai</span>
+                <p>"Buddy was found with a fractured paw. Today, he's living his best life!"</p>
+              </div>
+            </div>
+            <div className="rescue-item">
+              <div className="rescue-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=1000" alt="Rescued Cat" />
+              </div>
+              <div className="rescue-info">
+                <h4>Whiskers</h4>
+                <span>Ready for Adoption</span>
+                <p>"A gentle soul looking for a quiet home to share her purrs."</p>
+              </div>
+            </div>
+            <div className="rescue-item">
+              <div className="rescue-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&q=80&w=1000" alt="Rescued Puppy" />
+              </div>
+              <div className="rescue-info">
+                <h4>Luna</h4>
+                <span>Fostered in Delhi</span>
+                <p>"Recovering beautifully thanks to our amazing volunteer medical team."</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Revamped FAQ (User Friendly) */}
+      <section className="home-faq sec-padding">
+        <div className="container">
+          <div className="faq-container">
+            <div className="faq-header">
+              <h2>Common Questions</h2>
+              <p>Everything you need to know about helping our furry friends.</p>
+            </div>
+            <div className="faq-list">
+              {faqs.map((faq, idx) => (
+                <div className={`faq-card ${activeQA === idx ? 'active' : ''}`} key={idx} onClick={() => toggleQA(idx)}>
+                  <div className="faq-question">
+                    <span>{faq.question}</span>
+                    <div className="plus-icon">{activeQA === idx ? '−' : '+'}</div>
+                  </div>
+                  {activeQA === idx && <div className="faq-answer">{faq.answer}</div>}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Final CTA - Integrated with Footer */}
+      <section className="final-cta">
+        <div className="container">
+          <div className="cta-content">
+            <h2>Ready to make a difference?</h2>
+            <p>Your support could be the second chance an animal is waiting for.</p>
+            <div className="cta-btns">
+              <Link to="/volunteer" className="cta-btn cta-btn--primary">Join the Community</Link>
+              <Link to="/donate" className="cta-btn cta-btn--green">Support Our Mission</Link>
+            </div>
+          </div>
+        </div>
+        
+        {/* Inverted wave to smooth transition into footer */}
+        <div className="cta-wave-bottom">
+          <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,0 C320,120 420,-40 720,60 C1020,160 1120,0 1440,0 L1440,150 L0,150 Z" fill="#222"></path>
+          </svg>
+        </div>
+      </section>
     </div>
   );
 };

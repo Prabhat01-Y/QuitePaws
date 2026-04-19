@@ -1,139 +1,284 @@
 /* =========================================
-   GLOBAL RESET
+   About Page - Premium Styling
 ========================================= */
 
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  background-color: #ffffff;
-  font-family: "Raleway", sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800&display=swap');
+
+.about-page {
+  background-color: #fafafa;
+  color: #1a1a1b;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  margin-top: 80px; /* Offset for navbar */
 }
 
-/* =========================================
-   WRAPPER
-========================================= */
-
-.about-page-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  width: 100%;
-  background-color: #ffffff;
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-/* =========================================
-   MAIN CONTENT
-========================================= */
+.sec-padding {
+  padding: 100px 0;
+}
 
-.about-content {
-  flex: 1;
-  width: 100%;
-  margin-top: 80px;
-  padding: 60px 20px 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+/* 1. Hero Section */
+.about-hero {
+  background: radial-gradient(circle at center, #013a1f 0%, #001f0f 100%);
+  color: #ffffff;
+  padding: 140px 0 120px;
   text-align: center;
-  gap: 40px;
+  position: relative;
+  border-bottom: 2px solid #006f3c;
+}
+
+.hero-tagline {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 32px;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.02em;
   max-width: 900px;
   margin-left: auto;
   margin-right: auto;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* =========================================
-   TEXT SECTION
-========================================= */
-
-.about-text {
-  flex: 1;
-  max-width: 650px;
+.hero-description {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  opacity: 0.9;
+  max-width: 750px;
+  margin: 0 auto;
+  line-height: 1.8;
 }
 
-.about-text h1 {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
+/* Common Section Typography */
+.section-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
   color: #006f3c;
-  margin-bottom: 30px;
-  font-family: 'Outfit', sans-serif;
   font-weight: 700;
-  letter-spacing: 1px;
+  margin-bottom: 16px;
 }
 
-.about-text p {
-  font-size: 1.25rem;
-  line-height: 1.9;
-  color: #444;
-  margin-bottom: 25px;
+.section-subtitle {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 800;
+  margin-bottom: 24px;
+  color: #111;
+  font-family: 'Outfit', sans-serif;
 }
 
-/* =========================================
-   GRAPHIC SECTION
-========================================= */
-
-.about-graphic-wrapper {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.section-description {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 48px;
 }
 
-.about-graphic-wrapper svg {
-  width: 100%;
-  max-width: 650px;
-  height: auto;
+/* 2. Our Story */
+.about-story {
+  background-color: #ffffff;
+  text-align: center;
 }
 
-/* =========================================
-   LARGE SCREEN ENHANCEMENT
-========================================= */
-
-@media (min-width: 1200px) {
-  .about-text h1 {
-    font-size: 3.8rem;
-  }
-
-  .about-text p {
-    font-size: 1.35rem;
-  }
+.story-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
 }
 
-/* =========================================
-   TABLET
-========================================= */
-
-@media (max-width: 992px) {
-  .about-content {
-    gap: 50px;
-  }
+.story-content p {
+  font-size: 1.15rem;
+  margin-bottom: 24px;
+  color: #3f3f46;
 }
 
-/* =========================================
-   MOBILE
-========================================= */
+.story-conclusion {
+  font-size: 1.3rem !important;
+  color: #006f3c !important;
+  font-weight: 600;
+  margin: 48px auto 0;
+  padding: 24px 0;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  max-width: 600px;
+}
 
-@media (max-width: 900px) {
+/* 3. Impact Section */
+.about-impact {
+  background-color: #f8fafc;
+  text-align: center;
+}
 
-  .about-content {
-    flex-direction: column;
-    text-align: center;
-    padding: 80px 20px 100px;
-    gap: 50px;
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 32px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: white;
+  padding: 48px 32px;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-number {
+  display: block;
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #006f3c;
+  font-family: 'Outfit', sans-serif;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: #64748b;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stats-footer {
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+/* 4. What We Do */
+.about-features {
+  background-color: #ffffff;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+}
+
+.feature-card {
+  padding: 40px;
+  border-radius: 24px;
+  background: #fdfdfd;
+  border: 1px solid #f1f5f9;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  background: #ffffff;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+  border-color: #e2e8f0;
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 24px;
+}
+
+.feature-card h4 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #111;
+}
+
+.feature-card p {
+  color: #4b5563;
+  line-height: 1.7;
+}
+
+/* 5. Values Section */
+.about-values {
+  background-color: #f8fafc;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 32px;
+}
+
+.value-item h5 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #111;
+}
+
+.value-item p {
+  font-size: 0.95rem;
+  color: #64748b;
+}
+
+/* 6. Team Section */
+.about-team {
+  background-color: #ffffff;
+}
+
+.team-intro {
+  background: #f1f5f9;
+  padding: 60px;
+  border-radius: 32px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.team-intro p {
+  font-size: 1.1rem;
+  color: #334155;
+  line-height: 1.8;
+}
+
+/* 7. CTA Section */
+.about-cta {
+  background-color: #ffffff;
+}
+
+.cta-box {
+  background: linear-gradient(135deg, #006f3c 0%, #008f4c 100%);
+  color: white;
+  padding: 80px 40px;
+  border-radius: 40px;
+  text-align: center;
+  box-shadow: 0 25px 50px -12px rgba(0, 111, 60, 0.25);
+}
+
+.cta-box .section-title {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.cta-box .section-subtitle {
+  color: white;
+  margin-bottom: 24px;
+}
+
+.cta-box p {
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .sec-padding {
+    padding: 60px 0;
   }
 
-  .about-text {
-    max-width: 100%;
+  .team-intro, .card-simple {
+    padding: 32px;
   }
 
-  .about-graphic-wrapper svg {
-    max-width: 400px;
-  }
-
-  .about-text h1 {
-    font-size: 2.4rem;
-  }
-
-  .about-text p {
-    font-size: 1.1rem;
+  .cta-box {
+    padding: 50px 24px;
+    border-radius: 24px;
   }
 }

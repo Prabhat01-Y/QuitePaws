@@ -2,6 +2,13 @@
    Form Card
 ========================================= */
 
+.admin-page {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .admin-add-animal-container {
   background: white;
   padding: 40px 50px;
@@ -10,7 +17,7 @@
   border: 1px solid #e2e8f0;
   width: 100%;
   max-width: 600px;
-  margin: 0; /* Align perfectly within the new layout */
+  margin: 0 auto; /* Align perfectly within the new layout */
 }
 
 .admin-add-animal-container h2 {

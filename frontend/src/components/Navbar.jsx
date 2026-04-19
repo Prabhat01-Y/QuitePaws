@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
@@ -13,33 +13,31 @@ const Navbar = () => {
   };
 
   return (
-    <header id="header" className="navbar">
+    <header className="navbar">
       <Link to="/" className="logo">
         <span className="logo-icon">🐾</span>
-        <div className="logo-text-col">
-          <span className="logo-title">QUIETPAWS</span>
-          <span className="logo-sub">COMPASSION. PROTECTION. PRESERVATION.</span>
-        </div>
+        QuietPaws
       </Link>
       <ul>
-        <li><Link to="/" className="active">Home</Link></li>
-        <li><Link to="/about">About</Link></li>
-
-        {/* Only show Adoption & Volunteer for public / non-role users */}
+        <li><NavLink to="/">Home</NavLink></li>
+        <li><NavLink to="/about">About</NavLink></li>
+        <li><NavLink to="/contact">Contact</NavLink></li>
+        
+        {/* Only show Adoption for public users */}
         {!isAdmin && !isVolunteer && (
-          <li><Link to="/adopt">Adoption</Link></li>
+          <li><NavLink to="/adopt">Adoption</NavLink></li>
         )}
 
-        <li><Link to="/donate">Donate</Link></li>
-        <li><Link to="/contact">Contact</Link></li>
+        <li><NavLink to="/volunteer">Volunteer</NavLink></li>
+        <li><NavLink to="/donate">Donation</NavLink></li>
 
-        {isAuthenticated ? (
+        {isAuthenticated && (
           <>
             {isAdmin && (
-              <li><Link to="/admin" className="admin-nav-link">Admin Panel</Link></li>
+              <li><NavLink to="/admin" className="admin-nav-link">Admin Panel</NavLink></li>
             )}
             {isVolunteer && (
-              <li><Link to="/volunteer-dashboard" className="admin-nav-link">My Dashboard</Link></li>
+              <li><NavLink to="/volunteer-dashboard" className="admin-nav-link">Dashboard</NavLink></li>
             )}
             <li>
               <button className="logout-nav-btn" onClick={handleLogout}>
@@ -47,11 +45,9 @@ const Navbar = () => {
               </button>
             </li>
           </>
-        ) : (
-          <>
-            <li><Link to="/volunteer">Volunteer</Link></li>
-            <li><Link to="/login" className="admin-nav-link">Sign In</Link></li>
-          </>
+        )}
+        {!isAuthenticated && (
+          <li><NavLink to="/login" className="logout-nav-btn">SIGN IN</NavLink></li>
         )}
       </ul>
     </header>
