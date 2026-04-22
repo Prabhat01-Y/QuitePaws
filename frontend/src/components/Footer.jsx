@@ -1,14 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Footer.css';
 
-
-import fbIcon from '../assets/fb.webp'; 
-import instaIcon from '../assets/insta.png';
-import xIcon from '../assets/x.webp';
-import ytIcon from '../assets/yt.webp';
-
 const Footer = () => {
+    const location = useLocation();
+
+    // Hide Footer when on any admin route, EXCEPT the admin login page
+    if (location.pathname.startsWith('/admin') && location.pathname !== '/admin/login') {
+        return null;
+    }
+
   return (
     <footer className="footer">
         <div className="footer-container">

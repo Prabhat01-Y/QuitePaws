@@ -1,5 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { 
+  FaMapMarkerAlt, 
+  FaPhoneAlt, 
+  FaClock, 
+  FaCheckCircle, 
+  FaFileImage
+} from 'react-icons/fa';
 import './AdminStyles.css';
 
 const ManageRescues = () => {
@@ -8,140 +15,136 @@ const ManageRescues = () => {
   const [loading, setLoading] = useState(true);
   const [selectedRescueProof, setSelectedRescueProof] = useState(null);
 
-  const fetchRescues = async () => {
+  const fetchRescues = useCallback(async () => {
     try {
       const res = await fetch('http://localhost:5000/api/admin/rescues', {
         headers: { Authorization: `Bearer ${token}` }
       });
-      if (res.ok) {
-        const data = await res.json();
-        console.log("DEBUG: Rescues Data", data);
-        setRescues(data);
-      }
+      if (res.ok) setRescues(await res.json());
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
 
   useEffect(() => {
     fetchRescues();
-  }, [token]);
+
+    // Listen for global refresh events from the Topbar
+    const handleGlobalRefresh = () => fetchRescues();
+    window.addEventListener('refresh-rescues', handleGlobalRefresh);
+    
+    return () => {
+      window.removeEventListener('refresh-rescues', handleGlobalRefresh);
+    };
+  }, [fetchRescues]);
 
   const updateStatus = async (id, newStatus) => {
     try {
       const res = await fetch(`http://localhost:5000/api/admin/rescues/${id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ status: newStatus })
       });
-
       if (res.ok) {
         setRescues(rescues.map(r => r._id === id ? { ...r, status: newStatus } : r));
-      } else {
-        alert('Failed to update status');
+        // Also dispatch a refresh event back to the topbar so the count updates
+        window.dispatchEvent(new CustomEvent('refresh-rescues'));
       }
     } catch (err) {
       alert('Error updating status');
     }
   };
 
-  if (loading) return <div className="admin-loading">Loading rescues...</div>;
+  const getPriorityColor = (priority) => {
+    switch (priority?.toLowerCase()) {
+      case 'critical': return 'status-rejected';
+      case 'high': return 'status-rejected';
+      case 'medium': return 'status-pending';
+      default: return 'status-approved';
+    }
+  };
+
+  if (loading) return <div className="admin-loading">Initializing dispatch system...</div>;
 
   return (
-    <div className="admin-page management-view">
-      {/* Premium Dashboard Header */}
-      <div className="management-header">
-        <div className="header-text">
-          <h1>Emergency <span className="highlight">Rescues</span></h1>
-          <p>Track and update active animal rescue reports.</p>
+    <div className="admin-page">
+      {/* Simplified header: Title only, buttons moved to global topbar */}
+      <div className="management-header-clean">
+        <div className="header-info">
+          <div className="title-row">
+            <h1>Rescue Cases</h1>
+          </div>
+          <p>Real-time monitoring and coordination of emergency response incidents</p>
         </div>
       </div>
 
-      <div className="animal-list-container">
+      <div className="rescue-operations-container">
         {rescues.length === 0 ? (
           <div className="empty-state">
-            <span className="empty-icon">🚑</span>
-            <h3>No rescue reports found</h3>
-            <p>Active emergency missions will appear here for coordination.</p>
+            <FaCheckCircle size={48} style={{ color: 'var(--success)', marginBottom: '16px' }} />
+            <h3>All Incidents Resolved</h3>
+            <p>There are no pending emergency reports at this time.</p>
           </div>
         ) : (
-          <div className="animal-cards-grid">
+          <div className="rescue-grid">
             {rescues.map((rescue) => (
-              <div key={rescue._id} className="animal-management-card operational-card friendly-mode">
-                {/* Column 1: Identity & Issue Highlight */}
-                <div className="card-section info-pane highlight-focus">
-                  <div className="animal-details">
-                    <div className="reporter-head">
-                      <h3>{rescue.name}</h3>
-                      <span className="contact-pill-friendly">📞 {rescue.mobile}</span>
-                    </div>
+              <div key={rescue._id} className={`rescue-card status-border-${rescue.status}`}>
+                <div className="rescue-card-top">
+                  <div className="priority-badge-container">
+                    <span className={`rescue-priority-tag ${getPriorityColor(rescue.priority)}`}>
+                      {rescue.priority}
+                    </span>
+                  </div>
+                  <div className="report-id">
+                    #{(rescue._id || '').slice(-6).toUpperCase()}
+                  </div>
+                </div>
 
-                    <div className="issue-highlight-box">
-                      <span className="issue-label">Incident Description</span>
-                      <p className="issue-text-large">{rescue.description}</p>
+                <div className="rescue-card-body">
+                  <h3 className="reporter-name">{rescue.name}</h3>
+                  <div className="incident-description">
+                    <p>{rescue.description}</p>
+                  </div>
+
+                  <div className="info-item-list">
+                    <div className="info-item">
+                      <FaMapMarkerAlt className="mini-icon" />
+                      <span>{rescue.address}</span>
+                    </div>
+                    <div className="info-item">
+                      <FaPhoneAlt className="mini-icon" />
+                      <span>{rescue.mobile}</span>
+                    </div>
+                    <div className="info-item">
+                      <FaClock className="mini-icon" />
+                      <span>{new Date(rescue.createdAt).toLocaleString()}</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Column 2: Mission Logistics */}
-                <div className="card-section logistics-pane">
-                  <div className="logistics-grid">
-                    <div className="log-item">
-                      <span className="log-label">PRIORITY LEVEL</span>
-                      <span className={`log-value priority-tag-${rescue.priority}`} style={{ color: rescue.priority === 'critical' ? '#e11d48' : '#f59e0b', fontWeight: '800' }}>
-                        ⚡ {rescue.priority.toUpperCase()}
-                      </span>
-                    </div>
-                    <div className="log-item">
-                      <span className="log-label">REPORT DATE</span>
-                      <span className="log-value">{new Date(rescue.createdAt || Date.now()).toLocaleDateString()}</span>
-                    </div>
+                <div className="rescue-card-footer">
+                  <div className="status-control">
+                    <label>Status</label>
+                    <select
+                      className={`status-dropdown dropdown-${rescue.status}`}
+                      value={rescue.status}
+                      onChange={(e) => updateStatus(rescue._id, e.target.value)}
+                    >
+                      <option value="pending">Pending Dispatch</option>
+                      <option value="in-progress">In Progress</option>
+                      <option value="resolved">Case Resolved</option>
+                    </select>
                   </div>
-                  <div className="address-banner">
-                    <span className="log-label" style={{ marginBottom: '4px', display: 'block' }}>INCIDENT LOCATION</span>
-                    📍 {rescue.address}
+                  
+                  <div className="footer-actions">
+                    {rescue.status === 'resolved' && (rescue.completionNote || (rescue.completionPhotos?.length > 0)) && (
+                      <button className="proof-btn" onClick={() => setSelectedRescueProof(rescue)}>
+                        <FaFileImage /> Proof
+                      </button>
+                    )}
                   </div>
-                </div>
-
-                {/* Column 3: Operation Status & Unified Actions */}
-                <div className="card-section action-pane" style={{background: '#fcfdfe'}}>
-                   <div className="audit-field-grid">
-                      <div className="log-item">
-                         <span className="log-label">CURRENT STATUS</span>
-                         <div className={`status-label status-${rescue.status}`} style={{width: 'fit-content', marginTop: '5px'}}>
-                            ● {rescue.status.toUpperCase()}
-                         </div>
-                      </div>
-
-                      <div className="log-item">
-                         <span className="log-label">UPDATE MISSION</span>
-                         <select
-                           className={`status-select premium-status-select status-${rescue.status}`}
-                           value={rescue.status}
-                           onChange={(e) => updateStatus(rescue._id, e.target.value)}
-                           style={{ width: '100%', padding: '15px', borderRadius: '15px', border: '1px solid #e2e8f0', fontWeight: '800', background: 'white', color: '#0f172a', fontSize: '0.9rem', cursor: 'pointer', marginTop: '5px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' }}
-                         >
-                           <option value="pending">Mark Pending</option>
-                           <option value="in-progress">In Progress</option>
-                           <option value="resolved">Mark Resolved</option>
-                         </select>
-                      </div>
-
-                      {rescue.status === 'resolved' && (rescue.completionNote || (rescue.completionPhotos && rescue.completionPhotos.length > 0)) && (
-                        <div className="log-item">
-                           <span className="log-label">RESOLUTION PROOF</span>
-                           <button className="premium-action-btn edit" onClick={() => setSelectedRescueProof(rescue)} style={{width: '100%', justifyContent: 'center', background: '#f1f5f9', color: '#475569', marginTop: '5px'}}>
-                              <span className="icon">🖼️</span>
-                              View Mission Proof
-                           </button>
-                        </div>
-                      )}
-                   </div>
                 </div>
               </div>
             ))}
@@ -149,38 +152,33 @@ const ManageRescues = () => {
         )}
       </div>
 
-      {/* Proof Modal */}
       {selectedRescueProof && (
         <div className="admin-modal-overlay" onClick={() => setSelectedRescueProof(null)}>
-          <div className="admin-modal-content proof-modal-wide" onClick={e => e.stopPropagation()}>
-             <div className="modal-close-btn" onClick={() => setSelectedRescueProof(null)}>×</div>
-             
-             <div className="proof-header">
-                <span className="receipt-status-badge">MISSION PROOF</span>
-                <h2 style={{color: '#0f172a', fontWeight: '900', marginTop: '10px'}}>Resolution Details</h2>
-                <p>Report ID: {selectedRescueProof._id.slice(-6).toUpperCase()}</p>
-             </div>
+          <div className="resolution-modal" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>Resolution Evidence</h3>
+              <button className="close-x" onClick={() => setSelectedRescueProof(null)}>×</button>
+            </div>
 
-             <div className="proof-body" style={{display: 'grid', gridTemplateColumns: selectedRescueProof.completionPhotos?.length > 0 ? '1fr 1fr' : '1fr', gap: '30px', marginTop: '30px'}}>
-                {selectedRescueProof.completionPhotos?.length > 0 && (
-                   <div className="proof-image-container">
-                      <img 
-                        src={`http://localhost:5000/uploads/emergency-reports/${selectedRescueProof.completionPhotos[0].replace(/\\/g, '/')}`} 
-                        alt="Resolution Evidence" 
-                        style={{width: '100%', borderRadius: '20px', boxShadow: '0 15px 30px rgba(0,0,0,0.1)', border: '1px solid #f1f5f9'}}
-                        onError={(e) => { e.target.src = 'https://via.placeholder.com/600x400?text=Evidence+Image+Not+Found'; }}
-                      />
-                   </div>
-                )}
-                <div className="proof-note-container">
-                   <h4 className="log-label">COMPLETION NOTE</h4>
-                   <div className="issue-highlight-box" style={{background: '#f8fafc', padding: '20px'}}>
-                      <p style={{fontSize: '1.1rem', color: '#334155', lineHeight: '1.6'}}>
-                        {selectedRescueProof.completionNote || "No text description provided for this resolution."}
-                      </p>
-                   </div>
+            <div className="modal-body-scroll">
+              {selectedRescueProof.completionPhotos?.length > 0 && (
+                <div className="evidence-image-container">
+                  <img
+                    src={`http://localhost:5000/uploads/emergency-reports/${selectedRescueProof.completionPhotos[0].replace(/\\/g, '/')}`}
+                    alt="Rescue Success Proof"
+                  />
                 </div>
-             </div>
+              )}
+              <div className="log-section">
+                <label>Resolution Log</label>
+                <div className="log-content">
+                  {selectedRescueProof.completionNote || "Official resolution note not provided."}
+                </div>
+              </div>
+            </div>
+            <div className="modal-footer">
+                <button className="close-btn-full" onClick={() => setSelectedRescueProof(null)}>Close Review</button>
+            </div>
           </div>
         </div>
       )}

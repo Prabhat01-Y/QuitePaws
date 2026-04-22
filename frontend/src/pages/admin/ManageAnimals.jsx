@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { 
+  FaPaw, 
+  FaTrashAlt, 
+  FaSyncAlt, 
+  FaCamera
+} from 'react-icons/fa';
 import './AdminStyles.css';
 
 const ManageAnimals = () => {
   const [animals, setAnimals] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [viewPhoto, setViewPhoto] = useState(null);
   const { token } = useAuth();
 
   const fetchAnimals = async () => {
     try {
       const res = await fetch('http://localhost:5000/api/animals');
       if (res.ok) {
-        const data = await res.json();
-        setAnimals(data);
+        setAnimals(await res.json());
       }
     } catch (err) {
       console.error(err);
@@ -23,21 +28,15 @@ const ManageAnimals = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this animal record? This action cannot be undone.')) return;
-    
+    if (!window.confirm('Delete this record?')) return;
     try {
       const res = await fetch(`http://localhost:5000/api/animals/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
-
-      if (res.ok) {
-        setAnimals(animals.filter(a => a._id !== id));
-      } else {
-        alert('Failed to delete animal. Please try again.');
-      }
+      if (res.ok) setAnimals(animals.filter(a => a._id !== id));
     } catch (err) {
-      console.error('Delete error:', err);
+      console.error(err);
     }
   };
 
@@ -45,89 +44,124 @@ const ManageAnimals = () => {
     try {
       const res = await fetch(`http://localhost:5000/api/animals/${id}`, {
         method: 'PUT',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` 
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({ isAvailable: !currentStatus })
       });
-
       if (res.ok) {
-        const updatedAnimal = await res.json();
-        setAnimals(animals.map(a => a._id === id ? updatedAnimal : a));
+        const updated = await res.json();
+        setAnimals(animals.map(a => a._id === id ? updated : a));
       }
     } catch (err) {
-      console.error('Update error:', err);
+      console.error(err);
     }
+  };
+
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return 'https://via.placeholder.com/600x400?text=No+Photo+Uploaded';
+    if (imagePath.startsWith('http')) return imagePath;
+    return `http://localhost:5000/uploads/animals/${imagePath}`;
   };
 
   useEffect(() => {
     fetchAnimals();
   }, []);
 
-  if (loading) return <div className="admin-loading">Loading animals...</div>;
+  if (loading) return <div className="admin-loading">Assembling directory...</div>;
 
   return (
-    <div className="admin-page management-view">
-      {/* Premium Dashboard Header */}
-      <div className="management-header">
-        <div className="header-text">
-          <h1>Animal <span className="highlight">Management</span></h1>
-          <p>You have {animals.length} animals currently in the directory.</p>
+    <div className="admin-page">
+      <div className="management-header-clean">
+        <div className="header-info">
+          <h1>Animal Directory</h1>
         </div>
-        <Link to="/admin/add-animal" className="add-animal-btn-large">
-          <span className="plus-icon">+</span>
-          Add New Animal
-        </Link>
       </div>
 
-      {/* Removed Search & Filter Controls as per request */}
-
-      <div className="animal-list-container">
+      <div className="table-container-premium fitted">
         {animals.length === 0 ? (
           <div className="empty-state">
-            <span className="empty-icon">🐾</span>
-            <h3>No animals found</h3>
-            <p>Ready to save a life? Start by adding a new rescue record.</p>
+            <FaPaw size={48} color="var(--text-muted)" />
+            <h3>No Records Found</h3>
           </div>
         ) : (
-          <div className="animal-cards-grid">
-            {animals.map((animal) => (
-              <div key={animal._id} className="animal-management-card">
-                <div className="card-main-info no-image">
-                  <div className="animal-details">
-                    <h3>{animal.name}</h3>
-                    <p className="breed-tag">{animal.breed || 'Mixed Breed'}</p>
-                    <div className="meta-info">
-                      <span className="meta-item">🎂 {animal.age || '—'} Yrs</span>
-                      <span className="separator">•</span>
-                      <span className="meta-item">✨ {animal.gender || 'Not specified'}</span>
+          <table className="admin-premium-table">
+            <thead>
+              <tr>
+                <th>Animal Name</th>
+                <th>Breed</th>
+                <th>Status</th>
+                <th>Adoption Fee</th>
+                <th style={{ textAlign: 'right' }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {animals.map((animal) => (
+                <tr key={animal._id}>
+                  <td>
+                    <div 
+                      className="clickable-name" 
+                      onClick={() => setViewPhoto(animal)}
+                      title="Click to view photo"
+                    >
+                      <FaCamera className="cam-icon" />
+                      <span>{animal.name}</span>
                     </div>
-                  </div>
-                </div>
-
-                <div className="status-and-fee">
-                   <div className={`status-label ${animal.isAvailable ? 'available' : 'adopted'}`}>
-                     {animal.isAvailable ? 'Available' : 'Adopted'}
-                   </div>
-                   <div className="fee-tag">₹{animal.adoptionFee || '0'} Adoption Fee</div>
-                </div>
-
-                <div className="card-actions-group">
-                  <button className="premium-action-btn edit" onClick={() => handleToggleStatus(animal._id, animal.isAvailable)}>
-                    <span className="icon">🔄</span>
-                    Toggle Status
-                  </button>
-                  <button className="premium-action-btn delete" onClick={() => handleDelete(animal._id)}>
-                    <span className="icon">🗑️</span>
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+                  </td>
+                  <td>{animal.breed || '—'}</td>
+                  <td>
+                    <span className={`status-pill-table ${animal.isAvailable ? 'available' : 'adopted'}`}>
+                      {animal.isAvailable ? 'Available' : 'Adopted'}
+                    </span>
+                  </td>
+                  <td className="fee-td">₹{animal.adoptionFee}</td>
+                  <td style={{ textAlign: 'right' }}>
+                    <div className="table-actions">
+                      <button 
+                        className="tbl-action-btn sync" 
+                        onClick={() => handleToggleStatus(animal._id, animal.isAvailable)}
+                        title="Toggle Adoption Status"
+                      >
+                        <FaSyncAlt />
+                      </button>
+                      <button 
+                        className="tbl-action-btn del" 
+                        onClick={() => handleDelete(animal._id)}
+                        title="Delete Record"
+                      >
+                        <FaTrashAlt />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         )}
       </div>
+
+      {viewPhoto && (
+        <div className="admin-modal-overlay" onClick={() => setViewPhoto(null)}>
+          <div className="photo-viewer-modal" onClick={e => e.stopPropagation()}>
+            <div className="viewer-header">
+              <h3>{viewPhoto.name}'s Profile Image</h3>
+              <button className="close-x" onClick={() => setViewPhoto(null)}>×</button>
+            </div>
+            <div className="viewer-body">
+              <img 
+                src={getImageUrl(viewPhoto.image)} 
+                alt={viewPhoto.name} 
+              />
+            </div>
+            <div className="viewer-footer">
+               <div className="animal-quick-stats">
+                  <span><strong>Breed:</strong> {viewPhoto.breed}</span>
+               </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import {
+  FaHandHoldingHeart,
+  FaRegCalendarAlt,
+  FaRupeeSign,
+  FaReceipt,
+  FaEnvelope,
+  FaFileInvoiceDollar,
+  FaHistory
+} from 'react-icons/fa';
 import './AdminStyles.css';
 
 const ManageDonations = () => {
   const { token } = useAuth();
   const [donations, setDonations] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [selectedDonation, setSelectedDonation] = useState(null);
 
   useEffect(() => {
@@ -16,8 +24,7 @@ const ManageDonations = () => {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (res.ok) {
-          const data = await res.json();
-          setDonations(data);
+          setDonations(await res.json());
         }
       } catch (err) {
         console.error(err);
@@ -25,150 +32,157 @@ const ManageDonations = () => {
         setLoading(false);
       }
     };
-
     fetchDonations();
   }, [token]);
 
-  if (loading) return <div className="admin-loading">Loading donations...</div>;
+  if (loading) return <div className="admin-loading">Assembling financial audit records...</div>;
 
   const totalAmount = donations.reduce((sum, d) => sum + d.amount, 0);
 
   return (
-    <>
-      <div className="admin-page management-view">
-        {/* Premium Dashboard Header */}
-        <div className="management-header">
-          <div className="header-text">
-            <h1>Donation <span className="highlight">History</span></h1>
-            <p>Monitor and audit all financial contributions from the community.</p>
-          </div>
-        </div>
-
-        <div className="metrics-hub" style={{marginTop: '20px'}}>
-          <div className="metrics-grid-expansive">
-            <div className="glass-metric-card">
-              <div className="m-header">
-                 <span>Total Contributions</span>
-                 <div className="icon-wrap">💰</div>
-              </div>
-              <h2>₹{totalAmount.toLocaleString()}</h2>
-              <p className="metric-subtext" style={{color: '#94a3b8', fontSize: '0.9rem', fontWeight: 600}}>Lifetime platform impact</p>
-            </div>
-
-            <div className="glass-metric-card">
-              <div className="m-header">
-                 <span>Donation Count</span>
-                 <div className="icon-wrap">📈</div>
-              </div>
-              <h2>{donations.length}</h2>
-              <p className="metric-subtext" style={{color: '#94a3b8', fontSize: '0.9rem', fontWeight: 600}}>Individual community gifts</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="animal-list-container">
-          {donations.length === 0 ? (
-            <div className="empty-state">
-              <span className="empty-icon">💸</span>
-              <h3>No donations yet</h3>
-              <p>Once supporters contribute, their gift history will appear here.</p>
-            </div>
-          ) : (
-            <div className="animal-cards-grid" style={{marginTop: '40px'}}>
-            {donations.map((donation) => (
-              <div key={donation._id} className="animal-management-card operational-card friendly-mode donation-audit-row">
-                {/* Column 1: Member Identity */}
-                <div className="card-section info-pane">
-                  <div className="animal-details">
-                    <div className="reporter-head">
-                       <h3>{donation.donorName}</h3>
-                       <span className="contact-pill-friendly">📧 {donation.donorEmail}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Column 2: Audit Logistics */}
-                <div className="card-section logistics-pane">
-                   <div className="audit-field-grid">
-                      <div className="field-row">
-                         <span className="log-label">DONATION DATE</span>
-                         <span className="log-value">{new Date(donation.createdAt).toLocaleDateString()}</span>
-                      </div>
-                      <div className="field-row">
-                         <span className="log-label">TRANSACTION STATUS</span>
-                         <div className="status-label" style={{background: '#ecfdf5', color: '#059669', border: 'none', width: 'fit-content', padding: '6px 15px', borderRadius: '50px', fontWeight: '800', fontSize: '0.75rem', marginLeft: '-8px'}}>
-                            ● COMPLETED
-                         </div>
-                      </div>
-                   </div>
-                </div>
-
-                {/* Column 3: Financial Record & Actions */}
-                <div className="card-section action-pane">
-                   <div className="financial-focus">
-                      <span className="log-label">TOTAL CONTRIBUTION</span>
-                      <h3 style={{fontSize: '2.2rem', color: '#059669', margin: '5px 0 20px 0'}}>₹{donation.amount.toLocaleString()}</h3>
-                   </div>
-
-                   <button className="premium-action-btn edit" onClick={() => setSelectedDonation(donation)} style={{width: '100%', justifyContent: 'center'}}>
-                      <span className="icon">📄</span>
-                      Review Receipt
-                   </button>
-                </div>
-              </div>
-            ))}
-          </div>
-          )}
+    <div className="admin-page">
+      <div className="management-header-clean">
+        <div className="header-info">
+          <h1>Donation Details</h1>
         </div>
       </div>
 
-      {/* Donation Receipt Modal */}
+      <div className="financial-summary-banner-premium">
+        <div className="summary-card-mini">
+          <div className="icon-box-mini success"><FaHandHoldingHeart /></div>
+          <div className="data-box-mini">
+            <label>Total Contributions</label>
+            <h3>₹{totalAmount.toLocaleString()}</h3>
+          </div>
+        </div>
+        <div className="summary-card-mini">
+          <div className="icon-box-mini info"><FaHistory /></div>
+          <div className="data-box-mini">
+            <label>Transaction Count</label>
+            <h3>{donations.length}</h3>
+          </div>
+        </div>
+      </div>
+
+      <div className="table-container-premium fitted">
+        {donations.length === 0 ? (
+          <div className="empty-state">
+            <FaHandHoldingHeart size={48} color="var(--text-muted)" style={{ marginBottom: '16px' }} />
+            <h3>No Contributions Yet</h3>
+            <p>Your donor history will be archived here.</p>
+          </div>
+        ) : (
+          <table className="admin-premium-table">
+            <thead>
+              <tr>
+                <th>Donor Information</th>
+                <th>Transaction Date</th>
+                <th>Donation Amount</th>
+                <th style={{ textAlign: 'right' }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {donations.map((donation) => (
+                <tr key={donation._id}>
+                  <td>
+                    <div className="donor-cell-premium" onClick={() => setSelectedDonation(donation)}>
+                      <div className="applicant-initials">
+                        {donation.donorName?.split(' ').map(n => n[0]).join('')}
+                      </div>
+                      <div className="name-stack">
+                        <span className="primary-name">{donation.donorName}</span>
+                        <span className="meta-row"><FaEnvelope size={10} /> {donation.donorEmail}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div className="submission-date">
+                      <FaRegCalendarAlt />
+                      {new Date(donation.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
+                    </div>
+                  </td>
+                  <td>
+                    <div className="currency-pill large">
+                      <FaRupeeSign />
+                      <span>{donation.amount.toLocaleString()}</span>
+                    </div>
+                  </td>
+                  <td style={{ textAlign: 'right' }}>
+                    <div className="table-actions">
+                      <button
+                        className="tbl-action-btn sync"
+                        onClick={() => setSelectedDonation(donation)}
+                        title="View Financial Receipt"
+                      >
+                        <FaFileInvoiceDollar />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+
       {selectedDonation && (
         <div className="admin-modal-overlay" onClick={() => setSelectedDonation(null)}>
-           <div className="admin-modal-content digital-receipt" onClick={e => e.stopPropagation()}>
-              <div className="modal-close-btn" onClick={() => setSelectedDonation(null)}>×</div>
-              
-              <div className="receipt-header">
-                 <span className="receipt-logo">QuietPaws</span>
-                 <span className="receipt-status-badge">TRANSACTION SUCCESSFUL</span>
+          <div className="review-modal-premium" style={{ maxWidth: '500px' }} onClick={e => e.stopPropagation()}>
+            <div className="modal-header-premium">
+              <div className="header-top">
+                <div className="icon-box-modal"><FaReceipt /></div>
+                <div className="header-titles">
+                  <h2>Transaction Receipt</h2>
+                  <p>Internal Financial Audit Copy</p>
+                </div>
+              </div>
+              <button className="close-x" onClick={() => setSelectedDonation(null)}>×</button>
+            </div>
+
+            <div className="receipt-container-premium">
+              <div className="receipt-watermark">QUIETPAWS FINANCIALS</div>
+
+              <div className="receipt-section">
+                <div className="receipt-row-premium">
+                  <label>DONOR IDENTITY</label>
+                  <p>{selectedDonation.donorName}</p>
+                </div>
+                <div className="receipt-row-premium">
+                  <label>EMAIL ADDRESS</label>
+                  <p>{selectedDonation.donorEmail}</p>
+                </div>
+                <div className="receipt-row-premium">
+                  <label>TRANSACTION DATE</label>
+                  <p>{new Date(selectedDonation.createdAt).toLocaleString()}</p>
+                </div>
+                <div className="receipt-row-premium">
+                  <label>INTERNAL REFERENCE ID</label>
+                  <p className="mono">{selectedDonation._id}</p>
+                </div>
               </div>
 
-              <div className="receipt-body">
-                 <div className="receipt-line">
-                    <span>DONOR NAME</span>
-                    <span>{selectedDonation.donorName}</span>
-                 </div>
-                 <div className="receipt-line">
-                    <span>EMAIL ADDRESS</span>
-                    <span>{selectedDonation.donorEmail}</span>
-                 </div>
-                 <div className="receipt-line">
-                    <span>PAYMENT METHOD</span>
-                    <span>{selectedDonation.paymentMethod || 'Online Transaction'}</span>
-                 </div>
-                 <div className="receipt-line">
-                    <span>TRANSACTION DATE</span>
-                    <span>{new Date(selectedDonation.createdAt).toLocaleString()}</span>
-                 </div>
-                 <div className="receipt-line">
-                    <span>TRANSACTION ID</span>
-                    <span style={{fontSize: '0.8rem', color: '#64748b'}}>{selectedDonation._id}</span>
-                 </div>
+              <div className="receipt-total-section">
+                <span className="total-label">FUNDS ALLOCATED</span>
+                <div className="total-amount-box">
+                  <FaRupeeSign />
+                  <span>{selectedDonation.amount.toLocaleString()}</span>
+                </div>
               </div>
 
-              <div className="receipt-total">
-                 <span>TOTAL CONTRIBUTION</span>
-                 <h3>₹{selectedDonation.amount.toLocaleString()}</h3>
+              <div className="receipt-footer-text">
+                This record confirms successful procurement of community contribution funds.
               </div>
+            </div>
 
-              <div className="receipt-footer">
-                 <p>Tax saving receipt generated for audit purposes.</p>
-                 <p style={{fontSize: '0.7rem', marginTop: '10px'}}>Questpaws Animal Welfare Foundation • Reg No: AF-2024-QPW</p>
-              </div>
-           </div>
+            <div className="modal-footer-premium">
+              <button className="add-record-btn-premium active full-width" onClick={() => setSelectedDonation(null)}>
+                Close Audit Record
+              </button>
+            </div>
+          </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

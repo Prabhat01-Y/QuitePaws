@@ -9,7 +9,8 @@
   color: #1a1a1b;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   line-height: 1.6;
-  margin-top: 80px; /* Offset for navbar */
+  margin-top: 80px;
+  /* Offset for navbar */
 }
 
 .container {
@@ -273,7 +274,8 @@
     padding: 60px 0;
   }
 
-  .team-intro, .card-simple {
+  .team-intro,
+  .card-simple {
     padding: 32px;
   }
 

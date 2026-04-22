@@ -11,7 +11,10 @@ const Donation = require('../models/Donation');
 const getMetrics = async (req, res) => {
   try {
     const totalAnimals = await Animal.countDocuments();
+    const totalAdoptions = await AdoptionRequest.countDocuments();
+    const totalRescues = await EmergencyReport.countDocuments();
     const pendingAdoptions = await AdoptionRequest.countDocuments({ status: 'pending' });
+    const approvedAdoptions = await AdoptionRequest.countDocuments({ status: 'approved' });
     const activeRescues = await EmergencyReport.countDocuments({ status: { $in: ['pending', 'in-progress'] } });
     
     // Sum official volunteer roles + direct registrations
@@ -22,12 +25,41 @@ const getMetrics = async (req, res) => {
     // All registered accounts (Admins, Volunteers, Users)
     const totalUsers = await User.countDocuments();
 
+    // Monthly data for the chart (last 12 months)
+    const twelveMonthsAgo = new Date();
+    twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 11);
+    twelveMonthsAgo.setDate(1);
+
+    const adoptionTrends = await AdoptionRequest.aggregate([
+      { $match: { createdAt: { $gte: twelveMonthsAgo } } },
+      { $group: { _id: { month: { $month: "$createdAt" } }, count: { $sum: 1 } } }
+    ]);
+
+    const rescueTrends = await EmergencyReport.aggregate([
+      { $match: { createdAt: { $gte: twelveMonthsAgo } } },
+      { $group: { _id: { month: { $month: "$createdAt" } }, count: { $sum: 1 } } }
+    ]);
+
+    // Merge logic: Combine adoption and rescue counts per month
+    const trendMap = {};
+    adoptionTrends.forEach(t => { trendMap[t._id.month] = (trendMap[t._id.month] || 0) + t.count; });
+    rescueTrends.forEach(t => { trendMap[t._id.month] = (trendMap[t._id.month] || 0) + t.count; });
+
+    const monthlyTrends = Object.keys(trendMap).map(m => ({
+      _id: { month: parseInt(m) },
+      count: trendMap[m]
+    }));
+
     res.json({
       totalAnimals,
+      totalAdoptions,
+      totalRescues,
       pendingAdoptions,
+      approvedAdoptions,
       activeRescues,
       totalVolunteers,
-      totalUsers
+      totalUsers,
+      monthlyTrends
     });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching metrics', error: error.message });

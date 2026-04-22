@@ -1,11 +1,17 @@
 import React from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
 const Navbar = () => {
   const { isAuthenticated, isAdmin, isVolunteer, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Hide Navbar when on any admin route, EXCEPT the admin login page
+  if (location.pathname.startsWith('/admin') && location.pathname !== '/admin/login') {
+    return null;
+  }
 
   const handleLogout = () => {
     logout();

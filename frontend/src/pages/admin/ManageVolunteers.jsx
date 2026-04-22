@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { 
+  FaUserFriends, 
+  FaUserTag, 
+  FaIdCard, 
+  FaCalendarCheck, 
+  FaEnvelope, 
+  FaPhoneAlt,
+  FaHistory,
+  FaMapMarkerAlt,
+  FaCheckCircle
+} from 'react-icons/fa';
 import './AdminStyles.css';
 
 const ManageVolunteers = () => {
@@ -7,7 +18,6 @@ const ManageVolunteers = () => {
   const [volunteers, setVolunteers] = useState([]);
   const [claimedRescues, setClaimedRescues] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [selectedVolunteer, setSelectedVolunteer] = useState(null);
 
   const fetchVolunteers = async () => {
@@ -16,8 +26,7 @@ const ManageVolunteers = () => {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (res.ok) {
-        const data = await res.json();
-        setVolunteers(data);
+        setVolunteers(await res.json());
       }
     } catch (err) {
       console.error(err);
@@ -33,7 +42,6 @@ const ManageVolunteers = () => {
       });
       if (res.ok) {
         const data = await res.json();
-        // Show only rescues that have been claimed by a volunteer
         setClaimedRescues(data.filter(r => r.assignedVolunteer));
       }
     } catch (err) {
@@ -46,127 +54,187 @@ const ManageVolunteers = () => {
     fetchClaimedRescues();
   }, [token]);
 
-  if (loading) return <div className="admin-loading">Loading volunteers...</div>;
+  if (loading) return <div className="admin-loading">Assembling personnel directory...</div>;
 
   return (
-    <>
-      <div className="admin-page management-view">
-        {/* Premium Dashboard Header */}
-        <div className="management-header">
-          <div className="header-text">
-            <h1>Volunteer <span className="highlight">Roster</span></h1>
-            <p>A complete list of registered community heroes.</p>
-          </div>
-        </div>
-
-        {/* Premium Rescue Activity Notifications */}
-        {claimedRescues.length > 0 && (
-          <div className="activity-feed">
-            <h3 className="section-title">🔔 Recent Field Activity</h3>
-            <div className="activity-grid">
-              {claimedRescues.map(rescue => (
-                <div key={rescue._id} className="activity-card">
-                  <div className="activity-main">
-                    <span className="activity-badge">MISSION CLAIMED</span>
-                    <p>
-                      <b>{rescue.assignedVolunteer?.name || 'A volunteer'}</b> has opted in for the <b>{rescue.category?.replace('-', ' ')}</b> rescue in <b>{rescue.address.split(',')[0]}</b>.
-                    </p>
-                  </div>
-                  <div className={`status-label status-${rescue.status}`}>
-                     ● {rescue.status.toUpperCase()}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div className="animal-list-container">
-          {volunteers.length === 0 ? (
-            <div className="empty-state">
-              <span className="empty-icon">👥</span>
-              <h3>Waiting for heroes</h3>
-              <p>New volunteer registrations will appear here for verification.</p>
-            </div>
-          ) : (
-            <div className="animal-cards-grid">
-              {volunteers.map((vol) => (
-                <div key={vol._id} className="animal-management-card">
-                  <div className="card-main-info no-image">
-                    <div className="animal-details">
-                      <h3>{vol.name}</h3>
-                      <p className="breed-tag"><b>{vol.type || 'Community'}</b> Volunteer • Joined {new Date(vol.createdAt).toLocaleDateString()}</p>
-                      <div className="meta-info">
-                        <span className="meta-item">📞 {vol.mobile}</span>
-                        <span className="separator">•</span>
-                        <span className="meta-item">📧 {vol.email}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="status-and-fee">
-                     <div className="status-label available" style={{background: '#f1f5f9', color: '#1e293b'}}>
-                        {vol.rolePref || 'General'}
-                     </div>
-                     <div className="fee-tag">{vol.experience?.length > 40 ? vol.experience.substring(0, 40) + '...' : vol.experience}</div>
-                  </div>
-
-                  <div className="card-actions-group">
-                     <button className="premium-action-btn edit" onClick={() => setSelectedVolunteer(vol)}>
-                        <span className="icon">👤</span>
-                        View Profile
-                     </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+    <div className="admin-page">
+      <div className="management-header-clean">
+        <div className="header-info">
+          <h1>Volunteer Details</h1>
         </div>
       </div>
 
-      {/* Volunteer Profile Modal */}
-      {selectedVolunteer && (
-        <div className="admin-modal-overlay" onClick={() => setSelectedVolunteer(null)}>
-           <div className="admin-modal-content" onClick={e => e.stopPropagation()}>
-              <div className="modal-close-btn" onClick={() => setSelectedVolunteer(null)}>×</div>
-              
-              <div className="profile-modal-head">
-                 <div className="profile-avatar-large">👤</div>
-                 <div className="profile-title-area">
-                    <h2>{selectedVolunteer.name}</h2>
-                    <p>{selectedVolunteer.type?.toUpperCase()} VOLUNTEER</p>
-                 </div>
-              </div>
-
-              <div className="profile-detail-grid">
-                 <div className="detail-block">
-                    <h4>CONTACT NUMBER</h4>
-                    <p>{selectedVolunteer.mobile}</p>
-                 </div>
-                 <div className="detail-block">
-                    <h4>EMAIL ADDRESS</h4>
-                    <p>{selectedVolunteer.email}</p>
-                 </div>
-                 <div className="detail-block">
-                    <h4>PREFERRED ROLE</h4>
-                    <p>{selectedVolunteer.rolePref || 'General Support'}</p>
-                 </div>
-                 <div className="detail-block">
-                    <h4>MEMBER SINCE</h4>
-                    <p>{new Date(selectedVolunteer.createdAt).toLocaleDateString()}</p>
-                 </div>
-              </div>
-
-              <div className="profile-bio">
-                 <h4 className="log-label" style={{color: '#94a3b8', fontSize: '0.7rem', marginBottom: '10px'}}>EXPERIENCE & BACKGROUND</h4>
-                 <p>{selectedVolunteer.experience || 'No experience details provided.'}</p>
-              </div>
-
-
+      {claimedRescues.length > 0 && (
+        <div className="table-container-premium activity-table-container">
+           <div className="activity-header">
+              <FaHistory />
+              <span>LIVE FIELD ACTIVITY MANIFEST</span>
            </div>
+           <table className="admin-premium-table mini-table">
+              <thead>
+                <tr>
+                  <th>Responsible Personnel</th>
+                  <th>Mission Action</th>
+                  <th>Incident Location</th>
+                  <th style={{ textAlign: 'right' }}>Current Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {claimedRescues.slice(0, 5).map(rescue => (
+                  <tr key={rescue._id}>
+                    <td>
+                      <div className="vol-activity-name">
+                        <div className="mini-initials">
+                          {rescue.assignedVolunteer?.name?.split(' ').map(n => n[0]).join('')}
+                        </div>
+                        <span>{rescue.assignedVolunteer?.name}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="action-cell">
+                        <FaCheckCircle className={`status-icon-mini ${rescue.status}`} />
+                        <span>Claimed {rescue.category?.replace('-', ' ')}</span>
+                      </div>
+                    </td>
+                    <td>
+                       <div className="loc-cell-mini">
+                          <FaMapMarkerAlt />
+                          <span>{rescue.address.split(',')[0]}</span>
+                       </div>
+                    </td>
+                    <td style={{ textAlign: 'right' }}>
+                       <span className={`status-pill-table ${rescue.status}`}>
+                          {rescue.status.toUpperCase()}
+                       </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+           </table>
         </div>
       )}
-    </>
+
+      <div className="table-container-premium fitted mt-large">
+        <div className="activity-header">
+           <FaUserFriends />
+           <span>PERSONNEL REPOSITORY</span>
+        </div>
+        {volunteers.length === 0 ? (
+          <div className="empty-state">
+            <FaUserFriends size={48} color="var(--text-muted)" style={{ marginBottom: '16px' }} />
+            <h3>No Volunteers Found</h3>
+            <p>New personnel registrations will appear here.</p>
+          </div>
+        ) : (
+          <table className="admin-premium-table">
+            <thead>
+              <tr>
+                <th>Volunteer Name</th>
+                <th>Working Flexibility</th>
+                <th>Member Since</th>
+                <th>Contact Details</th>
+                <th style={{ textAlign: 'right' }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {volunteers.map((vol) => (
+                <tr key={vol._id}>
+                  <td>
+                    <div className="clickable-name" onClick={() => setSelectedVolunteer(vol)}>
+                      <div className="applicant-initials">
+                        {vol.name.split(' ').map(n => n[0]).join('')}
+                      </div>
+                      <div className="name-stack">
+                        <span className="primary-name">{vol.name}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div className="role-tag-premium">
+                      <FaUserTag />
+                      <span>{vol.rolePref || 'General Support'}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div className="submission-date">
+                      <FaCalendarCheck />
+                      {new Date(vol.createdAt).toLocaleDateString()}
+                    </div>
+                  </td>
+                  <td>
+                    <div className="contact-meta-stack">
+                       <div className="meta-row"><FaEnvelope /> {vol.email}</div>
+                       <div className="meta-row muted"><FaPhoneAlt /> {vol.mobile}</div>
+                    </div>
+                  </td>
+                  <td style={{ textAlign: 'right' }}>
+                    <div className="table-actions">
+                      <button 
+                        className="tbl-action-btn sync" 
+                        onClick={() => setSelectedVolunteer(vol)}
+                        title="View Profile"
+                      >
+                         <FaIdCard />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+
+      {selectedVolunteer && (
+        <div className="admin-modal-overlay" onClick={() => setSelectedVolunteer(null)}>
+          <div className="review-modal-premium" onClick={e => e.stopPropagation()}>
+            <div className="modal-header-premium">
+              <div className="header-top">
+                <div className="applicant-badge-large">
+                  {selectedVolunteer.name.split(' ').map(n => n[0]).join('')}
+                </div>
+                <div className="header-titles">
+                  <h2>{selectedVolunteer.name}</h2>
+                </div>
+              </div>
+              <button className="close-x" onClick={() => setSelectedVolunteer(null)}>×</button>
+            </div>
+
+            <div className="modal-body-scroll">
+              <div className="review-section">
+                <h3>Identity & Contact</h3>
+                <div className="details-grid-premium">
+                  <div className="detail-item"><label>Email Address</label><p>{selectedVolunteer.email}</p></div>
+                  <div className="detail-item"><label>Phone Number</label><p>{selectedVolunteer.mobile}</p></div>
+                </div>
+              </div>
+
+              <div className="review-section bg-soft">
+                <h3>Working Info</h3>
+                <div className="details-grid-premium">
+                  <div className="detail-item"><label>Working Flexibility</label><p>{selectedVolunteer.rolePref || 'Not specified'}</p></div>
+                  <div className="detail-item"><label>Joined Date</label><p>{new Date(selectedVolunteer.createdAt).toLocaleDateString()}</p></div>
+                  <div className="detail-item full"><label>Skills & Interests</label><p>{selectedVolunteer.skills?.join(', ') || 'N/A'}</p></div>
+                </div>
+              </div>
+
+              <div className="review-section">
+                <h3>Work Opted</h3>
+                <div className="intent-box">
+                  <p>"{selectedVolunteer.experience || 'No experience details provided for this personnel record.'}"</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="modal-footer-premium">
+               <button className="add-record-btn-premium active full-width" onClick={() => setSelectedVolunteer(null)}>
+                  Close Profile Record
+               </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 

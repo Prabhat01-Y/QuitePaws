@@ -1,7 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './About.css';
 
 const About = () => {
+  const [stats, setStats] = useState({
+    rescues: 0,
+    adoptions: 0,
+    volunteers: 0
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/api/public/stats');
+        if (res.ok) {
+          const data = await res.json();
+          setStats(data);
+        }
+      } catch (err) {
+        console.error('Error fetching impact stats:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStats();
+  }, []);
+
   return (
     <div className="about-page">
       {/* 1. Hero / Intro Section */}
@@ -46,22 +70,26 @@ const About = () => {
       <section className="about-impact sec-padding">
         <div className="container">
           <h2 className="section-title">Impact so far</h2>
-          <p className="section-description">Small numbers, real lives</p>
+          <p className="section-description">Real lives transformed through community action</p>
+          
           <div className="stats-grid">
             <div className="stat-card">
-              <span className="stat-number">340+</span>
+              <span className="stat-number">{loading ? '...' : `${stats.rescues}+`}</span>
               <span className="stat-label">Animals rescued</span>
             </div>
             <div className="stat-card">
-              <span className="stat-number">180+</span>
+              <span className="stat-number">{loading ? '...' : `${stats.adoptions}+`}</span>
               <span className="stat-label">Successful adoptions</span>
             </div>
             <div className="stat-card">
-              <span className="stat-number">200+</span>
+              <span className="stat-number">{loading ? '...' : `${stats.volunteers}+`}</span>
               <span className="stat-label">Active volunteers</span>
             </div>
           </div>
-          <p className="stats-footer">Numbers are updated quarterly. Every figure represents a life touched.</p>
+          
+          <p className="stats-footer">
+            {loading ? 'Refreshing impact data...' : 'Live data synced from our rescue network. Every figure represents a life touched.'}
+          </p>
         </div>
       </section>
 
@@ -116,7 +144,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* 7. The Team Section */}
+      {/* 6. The Team Section */}
       <section className="about-team sec-padding">
         <div className="container">
           <div className="team-intro card-simple">

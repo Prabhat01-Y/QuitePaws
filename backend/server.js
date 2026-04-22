@@ -39,6 +39,9 @@ app.use('/api/volunteer-registrations', require('./routes/volunteerRegistrationR
 // Emergency Report Routes
 app.use('/api/emergency-reports', require('./routes/emergencyReportRoutes'));
 
+// Public Stats Routes
+app.use('/api/public', require('./routes/publicRoutes'));
+
 // (Optional) If you have your contact form route set up from your file structure:
 // app.use('/api/contact', require('./routes/contactRoutes'));
 
