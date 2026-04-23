@@ -31,11 +31,9 @@ const About = () => {
       {/* 1. Hero / Intro Section */}
       <section className="about-hero">
         <div className="container">
-          <h1 className="hero-tagline">A quieter corner of the internet — for every paw that needs a home</h1>
+          <h1 className="hero-tagline">A quieter corner of the internet, where every paw finds a home</h1>
           <p className="hero-description">
-            QuietPaws is a community-driven platform connecting rescued animals with loving adopters, 
-            dedicated volunteers, and compassionate donors across India. We believe every animal 
-            deserves a second chance, and every act of rescue — no matter how small — matters.
+            QuietPaws is a community-led platform that connects rescued animals with caring adopters, dedicated volunteers, and kind-hearted donors across India. We believe every animal deserves a second chance and every small act of rescue truly matters.
           </p>
         </div>
       </section>
@@ -45,22 +43,15 @@ const About = () => {
         <div className="container">
           <div className="story-content">
             <h2 className="section-title">Our story</h2>
-            <h3 className="section-subtitle">Born from a gap that cost lives</h3>
+            <h3 className="section-subtitle">Born from a gap that once cost lives</h3>
             <p>
-              Every day, thousands of animals are abandoned, injured, or overlooked — not because 
-              people don't care, but because the systems that should help them are broken. 
-              Rescue calls go unanswered for hours. Adoption pages go stale for weeks. 
-              Volunteers show up with nowhere to channel their energy.
+              Every day, countless animals are abandoned, injured, or simply overlooked not because people don’t care, but because the systems meant to help them fall short. Rescue calls often go unanswered. Adoption listings sit unchanged for weeks. And willing volunteers are left without a clear way to help.
             </p>
             <p>
-              QuietPaws was built to change that. We started with a simple belief: if you could 
-              make reporting an injured animal as easy as ordering food online, and make adopting 
-              a pet as transparent as reading a product review — you'd save more lives. 
-              So we built exactly that.
+              QuietPaws was built to change that. We started with a simple belief: if reporting an injured animal felt as easy as ordering food, and adopting a pet was as transparent as reading a review, more lives could be saved. So we set out to build exactly that.
             </p>
             <p className="story-conclusion">
-              Our mission is to make animal welfare faster, simpler, and more human — by bringing 
-              rescue, adoption, and community together in one place.
+              We’re on a mission to make animal welfare easier and more human, by uniting rescue, adoption, and community on a single platform.
             </p>
           </div>
         </div>
@@ -70,8 +61,8 @@ const About = () => {
       <section className="about-impact sec-padding">
         <div className="container">
           <h2 className="section-title">Impact so far</h2>
-          <p className="section-description">Real lives transformed through community action</p>
-          
+          <p className="section-description">Real lives changed through the power of community.</p>
+
           <div className="stats-grid">
             <div className="stat-card">
               <span className="stat-number">{loading ? '...' : `${stats.rescues}+`}</span>
@@ -86,7 +77,7 @@ const About = () => {
               <span className="stat-label">Active volunteers</span>
             </div>
           </div>
-          
+
           <p className="stats-footer">
             {loading ? 'Refreshing impact data...' : 'Live data synced from our rescue network. Every figure represents a life touched.'}
           </p>
@@ -100,19 +91,19 @@ const About = () => {
           <p className="section-description">Three things we do really well</p>
           <div className="features-grid">
             <div className="feature-card">
-              <div className="feature-icon">📍</div>
+              <div className="feature-icon">🆘</div>
               <h4>Emergency rescue</h4>
-              <p>Report injured or stray animals with a photo and your location. We alert nearby volunteers instantly.</p>
+              <p>Report injured or stray animals with a photo and location, we’ll instantly notify nearby volunteers.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">🐾</div>
+              <div className="feature-icon">🏠</div>
               <h4>Transparent adoption</h4>
-              <p>Browse real profiles — health records, temperament notes, and rescue stories — before you commit.</p>
+              <p>Get to know each animal through real profiles—health details, behavior notes, and their rescue journey before you commi</p>
             </div>
             <div className="feature-card">
               <div className="feature-icon">🤝</div>
               <h4>Volunteer network</h4>
-              <p>Sign up, choose your availability, and get matched to rescue tasks near you. No experience needed.</p>
+              <p>Join in, share when you’re available, and we’ll connect you with rescue opportunities near you no experience required.</p>
             </div>
           </div>
         </div>
@@ -126,19 +117,19 @@ const About = () => {
           <div className="values-grid">
             <div className="value-item">
               <h5>Transparency</h5>
-              <p>Every donation, every rescue case, every outcome is tracked and shared openly.</p>
+              <p>Every donation, rescue case, and outcome is tracked and shared openly..</p>
             </div>
             <div className="value-item">
               <h5>Accessibility</h5>
-              <p>Designed for everyone — from first-time reporters to seasoned shelter staff.</p>
+              <p>Built for everyone from first-time reporters to experienced shelter teams.</p>
             </div>
             <div className="value-item">
               <h5>Compassion</h5>
-              <p>Animals and people alike. We build tools that feel human, not bureaucratic.</p>
+              <p>For animals and the people who care for them we create tools that feel simple, human, and easy to use</p>
             </div>
             <div className="value-item">
               <h5>Community</h5>
-              <p>We don't save animals alone. Every rescue is a collaboration.</p>
+              <p>We don’t save animals alone every rescue is a shared effort.</p>
             </div>
           </div>
         </div>
@@ -150,10 +141,7 @@ const About = () => {
           <div className="team-intro card-simple">
             <h2 className="section-title">The team</h2>
             <p>
-              QuietPaws is built and maintained by a small, passionate team of developers, 
-              animal welfare advocates, and volunteers. We are not a corporation — we are people 
-              who got tired of waiting for someone else to fix the problem. If you'd like to join 
-              us, reach out through our Contact page or sign up as a volunteer.
+              QuietPaws is built and run by a small, passionate group of developers, animal welfare advocates, and volunteers. We’re not a corporation we’re people who got tired of waiting for change. If you’d like to be part of it, reach out through our Contact page or sign up as a volunteer.
             </p>
           </div>
         </div>
@@ -166,8 +154,7 @@ const About = () => {
             <h2 className="section-title">Get involved</h2>
             <h3 className="section-subtitle">There's a role for everyone here</h3>
             <p>
-              Whether you have five minutes to report an animal in distress, a weekend to volunteer, 
-              or simply a home to offer — QuietPaws has a place for you.
+              Whether you have five minutes to report an animal in need, a weekend to volunteer, or a home to offer there’s a place for you at QuietPaws.
             </p>
           </div>
         </div>

@@ -26,15 +26,15 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      {/* 1. Dynamic Hero Section */}
+      {/* 1. Hero Section */}
       <section className="hero-section">
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <div className="hero-badge">🐾 Saving Lives Every Day</div>
-          <h1 className="hero-main-title">A Quiter Corner for <br/><span>Every Paw in Need</span></h1>
+          <h1 className="hero-main-title">A Quiter Corner for <br /><span>Every Paw in Need</span></h1>
           <p className="hero-subtitle">
-            Connecting abandoned animals with loving hearts. 
-            From emergency rescues to forever homes, we're building a community that cares.
+            Helping abandoned animals find the love they deserve.
+            Whether it’s a rescue or a new home, we’re here to make sure they’re never alone again.
           </p>
           <div className="hero-cta-group">
             <Link to="/emergency-report" className="cta-btn cta-btn--emergency">
@@ -47,7 +47,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 2. Services / What We Do (Visual Impact) */}
+      {/* 2. Services */}
       <section className="home-services sec-padding">
         <div className="container">
           <div className="section-header">
@@ -56,34 +56,34 @@ const Home = () => {
           </div>
           <div className="services-grid">
             <div className="service-card">
-              <div className="service-icon">📍</div>
+              <div className="service-icon">🆘</div>
               <h3>Emergency Rescue</h3>
-              <p>Real-time reporting system that alerts rescuers instantly when an animal is in distress.</p>
+              <p>A real-time system that quickly notifies rescuers whenever an animal needs help.</p>
               <Link to="/emergency-report" className="service-link">Learn More ➔</Link>
             </div>
             <div className="service-card">
               <div className="service-icon">🏠</div>
               <h3>Smart Adoption</h3>
-              <p>Transparent matching process with detailed health records and temperament notes.</p>
+              <p>Helping you find the right companion with clear health info and personality details</p>
               <Link to="/adopt" className="service-link">Browse Pets ➔</Link>
             </div>
             <div className="service-card">
               <div className="service-icon">🤝</div>
               <h3>Volunteer Network</h3>
-              <p>Join a nationwide community of animal advocates dedicated to field work and fostering.</p>
+              <p>Be part of a growing community of animal lovers working hands-on to rescue and foster.</p>
               <Link to="/volunteer" className="service-link">Join Us ➔</Link>
             </div>
             <div className="service-card">
               <div className="service-icon">💝</div>
               <h3>Donation Drive</h3>
-              <p>Transparent fundraising for critical surgeries and shelter supplies with direct impact tracking.</p>
+              <p>Supporting critical care and shelter essentials with full transparency and real impact you can follow.</p>
               <Link to="/donate" className="service-link">Donate Now ➔</Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. Featured Rescues / Success Stories (Animal Friendly) */}
+      {/* 3. Success Stories */}
       <section className="featured-rescues sec-padding">
         <div className="container">
           <div className="section-header">
@@ -125,7 +125,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 4. Revamped FAQ (User Friendly) */}
+      {/* 4. FAQ */}
       <section className="home-faq sec-padding">
         <div className="container">
           <div className="faq-container">
@@ -148,7 +148,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 5. Final CTA - Integrated with Footer */}
+      {/* 5. Footer */}
       <section className="final-cta">
         <div className="container">
           <div className="cta-content">
@@ -160,7 +160,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Inverted wave to smooth transition into footer */}
         <div className="cta-wave-bottom">
           <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
